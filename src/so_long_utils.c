@@ -25,8 +25,9 @@ int     ft_get_height(char *file)
     int fd;
     int height;
 
+    fd = 0;
     height = 0;
-    fd = open(fd, O_RDONLY, 0);
+    fd = open(file, O_RDONLY, 0);
     while(get_next_line(fd, &line))
     {
         height++;
@@ -42,9 +43,10 @@ int     ft_get_width(char *file)
     int fd;
     int width;
 
+    fd = 0;
     width = 0;
-    fd = open(fd, O_RDONLY, 0);
-    get_next_line(fd, &line));
+    fd = open(file, O_RDONLY, 0);
+    get_next_line(fd, &line);
     width = ft_counting_words(line, ' ');
     close(fd);
     return (width);
@@ -52,8 +54,8 @@ int     ft_get_width(char *file)
 
 void    read_map(char *file, t_data *data)
 {
-    data->height = get_height(file);
-    data->width = get_width(file);
+    data->height = ft_get_height(file);
+    data->width = ft_get_width(file);
 
 
 }

@@ -67,4 +67,10 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+void				*ft_getmemset(void *b, int c, size_t len);
+void				ft_getsubstr(char *s, unsigned int start, size_t len);
+char				*ft_joinstr(char *s1, char *s2, size_t size);
+int					ft_strchr_g(char *s, int c);
+int					get_next_line(int fd, char **line);
+
 #endif

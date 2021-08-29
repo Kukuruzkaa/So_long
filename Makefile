@@ -12,19 +12,21 @@
 
 NAME			= so_long
 
-# LIBFT 			= Libft/libft.a
+LIBFT 			= Libft/libft.a
+MINILIBX 		= minilibx-linux
 
-SRCS 			= minilibx.c \
+SRCS 			= so_long.c \
+				so_long_utils.c \
+				main.c \
+				minilibx.c \
 
 OBJS			= $(SRCS:%.c=%.o)
-
-$(NAME):		$(OBJS) 
-				$(CC) -Lmlx_linux -lminilibx_linux -L/Bureau/so_long/minilibx-linux -Iminilibx-linux -lXext -lX11 -lm -lz -o $(NAME)
 
 RM 				= rm -rf
 
 CC 				= clang
 CFLAGS 			= -Wall -Werror -Wextra -g -c 
+FSAN			= -g3 -fsanitize=address
 SRCDIR 			= src
 OBJDIR 			= objs
 
@@ -36,14 +38,19 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p ${@D}
 	${CC} ${CFLAGS} -I./inc -c $< -o $@
 
+$(LIBFT):
+				@make bonus -C Libft
+
+$(NAME):		$(OBJS) $(LIBFT)
+				$(CC) -o $(NAME) $(OBJS) Libft/libft.a
 
 clean:
 				$(RM) $(OBJDIR)
-				make clean -C 
+				make clean -C Libft
 				
 fclean:			clean
 				$(RM) $(NAME)
-				make fclean -C 
+				make fclean -C Libft
 
 re: 			fclean all
 
