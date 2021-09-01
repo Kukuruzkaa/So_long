@@ -19,7 +19,7 @@ typedef struct s_data {
 	void *win_ptr;
 }				t_data;
 
-
+void    read_map(char *file, t_data *data);
 
 
 #endif

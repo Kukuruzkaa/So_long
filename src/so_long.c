@@ -1,6 +1,6 @@
-#include "so_long.h"
+// #include "so_long.h"
 
-int main()
-{
-	printf("lol");
-}
+// int main()
+// {
+// 	printf("lol");
+// }
