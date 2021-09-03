@@ -49,6 +49,7 @@ int		get_next_line(int fd, char **line)
 	if (fd < 0 || fd >= FD_MAX || !line || BUFFER_SIZE <= 0)
 		return (-1);
 	*line = NULL;
+	*line = (char*)malloc(sizeof(char));
 	if (!update_line_and_buffer(line, buffer[fd]))
 		free_and_exit(line, -1);
 	while (buffer_is_empty(buffer[fd]))

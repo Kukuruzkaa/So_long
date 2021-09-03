@@ -1,4 +1,15 @@
 #include "so_long.h"
+void    ft_init(t_data *data)
+{
+    width = 0;
+    height;
+    int **map_tab;
+    
+	void *mlx_ptr;
+	void *win_ptr;
+}
+
+
 
 int	ft_counting_words(char const *s, char c)
 {
@@ -58,6 +69,8 @@ void    ft_fill_map(int *tab_element, char *line)
     char **content;
 
     i = 0;
+    tab_element = NULL;
+    tab_element = (int*)malloc(sizeof(int));
     content = NULL;
     content = ft_split(line, ' ');
     while (content[i])
