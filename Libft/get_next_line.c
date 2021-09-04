@@ -50,6 +50,7 @@ int		get_next_line(int fd, char **line)
 		return (-1);
 	*line = NULL;
 	*line = (char*)malloc(sizeof(char));
+	(*line)[0] = '\0';
 	if (!update_line_and_buffer(line, buffer[fd]))
 		free_and_exit(line, -1);
 	while (buffer_is_empty(buffer[fd]))
@@ -64,3 +65,4 @@ int		get_next_line(int fd, char **line)
 	ft_getsubstr(buffer[fd], 1, BUFFER_SIZE - 1);
 	return (1);
 }
+

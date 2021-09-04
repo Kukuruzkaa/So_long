@@ -14,14 +14,10 @@
 # define LIBFT_H
 # include <string.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-
-# define OPEN MAX
-# define FD_MAX 1023
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 32
-# endif
+# include "get_next_line.h"
 
 typedef struct s_list
 {

@@ -13,8 +13,8 @@
 NAME			= so_long
 
 LIBFT 			= Libft/libft.a
-MINILIBX        = minilibx-linux
-LIBS 			= -LLibft -L${MINILIBX} -lft -lmlx -lX11 -lXext -lm -lbsd
+# MINILIBX        = minilibx-linux
+# LIBS 			= -LLibft -L${MINILIBX} -lft -lmlx -lX11 -lXext -lm -lbsd
 
 SRCS 			= so_long.c \
 				so_long_utils.c \
@@ -43,18 +43,18 @@ $(LIBFT):
 				@make bonus -C Libft
 
 $(NAME):		$(OBJS) $(LIBFT)
-				make -C ${MINILIBX}
-				$(CC) -o $(NAME) $(OBJS) ${LIBS}
+				# make -C ${MINILIBX}
+				$(CC) -o $(NAME) $(OBJS) Libft/libft.a
 
 clean:
 				$(RM) $(OBJDIR)
 				make clean -C Libft
-				make -C ${MINILIBX} clean
+				# make -C ${MINILIBX} clean
 				
 fclean:			clean
 				$(RM) $(NAME)
 				make fclean -C Libft
-				make -C ${MINILIBX} clean
+				# make -C ${MINILIBX} clean
 
 re: 			fclean all
 

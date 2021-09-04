@@ -46,11 +46,8 @@ SRCS 			= ft_atoi.c \
 				ft_substr.c \
 				ft_tolower.c \
 				ft_toupper.c \
-				ft_strchr_g.c \
-				ft_joinstr.c \
-				ft_getsubstr.c \
-				ft_getmemset.c \
 				get_next_line.c \
+				get_next_line_utils.c \
 
 OBJS			= $(SRCS:.c=.o)
 
