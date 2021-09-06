@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/06 15:31:18 by ddiakova          #+#    #+#             */
+/*   Updated: 2021/09/06 15:31:35 by ddiakova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 
@@ -11,23 +23,37 @@ int		main(int argc, char **argv)
 {
 	t_data *data;
 	int i;
-	int j;
 	char *line;
 	int fd;
 	int ret;
 	int countline;
 
 	i = 0;
-	j = 0;
 
 	(void) argc;
 	// (void) argv;
-	// int* number;
 
-	// number = (int*)malloc(sizeof(int));
  	data = (t_data*)malloc(sizeof(t_data));
 	
+	data->width = ft_get_width(argv[1]);
 	ft_read_map(argv[1], data);
+	while (data->map_tab[i] != NULL)
+	{
+		for (int j = 0; j <= data->width; j++)
+			printf ("%c", data->map_tab[i][j]);
+		printf("\n");
+		i++;
+	}
+	
+	// printf ("%d\n", (ft_check_length(data)));
+	i = 0;
+	while (data->map_tab[i] != NULL)
+	{
+		printf (" line : %d\n", (ft_check_wall(*data->map_tab)));
+		printf("\n");
+		i++;
+	}
+	
 	
 	countline = 1;
 	if (argc == 1)
@@ -44,19 +70,6 @@ int		main(int argc, char **argv)
 	free(line);
 	printf("\nTest de LEAKS\n");
 	system("leaks a.out | grep leaked\n"); 
-	return 0;
+
+	return (0);
 }
-	
-	// while (i < data->height)
-	// {
-	// 	while (j < data->width)
-	// 	{
-	// 		printf ("%d\n", data->map_tab[i][j]);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-
-
-// 	return (0);
-// }

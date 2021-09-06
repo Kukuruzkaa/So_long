@@ -13,13 +13,16 @@ typedef struct s_data {
 
     int width;
     int height;
-    int **map_tab;
+    char **map_tab;
     
 	void *mlx_ptr;
 	void *win_ptr;
 }				t_data;
 
 void    ft_read_map(char *file, t_data *data);
+int     ft_get_width(char *file);
+int     ft_check_length(t_data *data);
+int     ft_check_wall(char *line);
 
 
 #endif

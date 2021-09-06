@@ -19,6 +19,7 @@ LIBFT 			= Libft/libft.a
 SRCS 			= so_long.c \
 				so_long_utils.c \
 				main.c \
+				map_checker.c \
 				#minilibx.c \
 
 OBJS			= $(SRCS:%.c=%.o)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/06 15:31:45 by ddiakova          #+#    #+#             */
+/*   Updated: 2021/09/06 15:31:48 by ddiakova         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void    ft_init(t_data *data)
@@ -50,49 +62,46 @@ int     ft_get_width(char *file)
     return (width);
 }
 
-void    ft_fill_map(int *tab_element, char *line, t_data *data)
+char    **ft_fill_map(t_data **data, t_list *lst)
 {
     int i;
-    char **content;
+    int tab_size;
+    t_list **tmp;
 
     i = 0;
-    tab_element = NULL;
-    tab_element = (int*)malloc(sizeof(int) * (data->width + 1));
-    content = NULL;
-    content = ft_split(line, ' ');
-    while (content[i])
+    tmp = NULL;
+    tmp = &lst;
+    tab_size = ft_lstsize(lst);
+    (*data)->map_tab = ft_calloc(sizeof(char *), (tab_size + 1));
+    if (!(*data)->map_tab)
+        return (NULL);
+    while (lst)
     {
-       tab_element[i] = ft_atoi(content[i]);
-       free (content [i]);
-       i++;
+        (*data)->map_tab[i] = ft_strdup(lst->content);
+        i++;
+        lst = lst->next; 
     }
-    free(content);
+    (*data)->map_tab[i] = NULL;
+    ft_lstclear(tmp, NULL);
+    return ((*data)->map_tab);
 }
 
-void    ft_read_map(char *file, t_data *data)
+void  ft_read_map(char *file, t_data *data)
 {
-    int i;
+    t_list *map;
     int fd;
+    int ret;
     char *line;
 
+    map = NULL;
     line = NULL;
-    i = 0;
-    data->height = ft_get_height(file);
-    data->width = ft_get_width(file);
-
-    data->map_tab = (int**)malloc(sizeof(int*) * (data->height + 1));
-    while (i <= data->height)
-    {
-        data->map_tab[i] = (int*)malloc(sizeof(int) * (data->width + 1));
-        i++;
-    }
+    
     fd = open(file, O_RDONLY, 0);
-    while (get_next_line(fd, &line))
+    while ((ret = get_next_line(fd, &line) == 1))
     {
-        ft_fill_map(data->map_tab[i], line, data);
-        free (line);
-        i++;
+       if (line != NULL && ft_strlen(line) > 0)
+           ft_lstadd_back(&map, ft_lstnew(ft_strdup(line)));
     }
-    close(fd);
-    data->map_tab[i] = NULL;
+    ft_fill_map(&data, map);
+    close (fd);
 }
