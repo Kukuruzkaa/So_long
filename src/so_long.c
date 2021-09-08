@@ -45,11 +45,11 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	
-	// printf ("%d\n", (ft_check_length(data)));
+	printf ("check length %d\n", (ft_check_length(data)));
 	i = 0;
 	while (data->map_tab[i] != NULL)
 	{
-		printf (" line : %d\n", (ft_check_wall(*data->map_tab)));
+		printf (" line : %d\n", (ft_check_line(*data->map_tab)));
 		printf("\n");
 		i++;
 	}
