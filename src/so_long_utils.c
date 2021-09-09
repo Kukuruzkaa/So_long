@@ -22,43 +22,23 @@ void    ft_init(t_data *data)
 	data->win_ptr = NULL;
 }
 
-int     ft_get_height(char *file)
+int     ft_get_height(t_data *data)
 {
-    char *line;
-    int fd;
     int height;
-    int ret;
 
-    fd = 0;
     height = 0;
-    ret = 0;
-    fd = open(file, O_RDONLY, 0);
-    while((ret = (get_next_line(fd, &line)) > 0))
-    {
+    while (data->map_tab[height])
         height++;
-        free(line);
-    }
-    close(fd);
     return (height);
 }
 
-int     ft_get_width(char *file)
+int     ft_get_width(t_data *data)
 {
-    char *line;
-    int fd;
     int width;
-    int ret;
+    int i;
 
-    fd = 0;
-    width = 0;
-    ret = 0;
-    fd = open(file, O_RDONLY, 0);
-    while ((ret = get_next_line(fd, &line) > 0))
-    {
-        width = ft_strlen(line);
-        free (line);
-    }
-    close(fd);
+    if (data->map_tab[i])
+        width = ft_strlen(data->map_tab[i]);
     return (width);
 }
 

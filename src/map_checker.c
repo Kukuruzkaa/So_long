@@ -12,15 +12,19 @@
 
 #include "so_long.h"
 
-int	ft_check_length(t_data *data)
+int 	ft_is_rectangular(t_data *data)
+{
+	data->width = ft_get_width(data);
+	data->height = ft_get_height(data);
+
+	if  (data->height > data->width)
+		return (0);
+	return (1);
+}
+
+int	ft_is_same_length(t_data *data)
 {
 	int i;
-
-
-	// p = data->map[i+1];
-	
-	// data->map[i+1][0] = p[0] = *p
-	// data->map[i+1][1] = p[1] = *(p + 1)
 
 	i = 0;
 	while (data->map_tab[i] && data->map_tab[i + 1] != NULL)
@@ -32,7 +36,7 @@ int	ft_check_length(t_data *data)
 	return (1);
 } 
 
-int ft_check_wall(char *line)
+int ft_is_ones_only(char *line)
 {
 	int i;
 
@@ -46,7 +50,7 @@ int ft_check_wall(char *line)
 	return (1);
 }
 
-int ft_check_line(char *line)
+int ft_is_closed(char *line)
 {
 	int i;
 	int j;
@@ -61,6 +65,20 @@ int ft_check_line(char *line)
 			if (line[i] != '1')
 				return (0);
 		}
+		i++;
+	}
+	return (1);
+}
+
+int 	ft_is_possible_character(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (!ft_strchr("01CEP", line[i]))
+			return (0);
 		i++;
 	}
 	return (1);

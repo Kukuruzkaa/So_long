@@ -49,7 +49,7 @@ int		main(int argc, char **argv)
 	i = 0;
 	while (data->map_tab[i] != NULL)
 	{
-		printf (" line : %d\n", (ft_check_line(*data->map_tab)));
+		printf (" line : %d\n", (ft_check_line(data->map_tab[i])));
 		printf("\n");
 		i++;
 	}
