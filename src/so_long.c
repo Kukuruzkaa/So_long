@@ -27,7 +27,7 @@ int		main(int argc, char **argv)
 	int fd;
 	int ret;
 	int countline;
-
+	fd = 0;
 	i = 0;
 
 	(void) argc;
@@ -35,7 +35,7 @@ int		main(int argc, char **argv)
 
  	data = (t_data*)malloc(sizeof(t_data));
 	
-	data->width = ft_get_width(argv[1]);
+	data->width = ft_get_width(data);
 	ft_read_map(argv[1], data);
 	while (data->map_tab[i] != NULL)
 	{
@@ -45,15 +45,7 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	
-	printf ("check length %d\n", (ft_check_length(data)));
-	i = 0;
-	while (data->map_tab[i] != NULL)
-	{
-		printf (" line : %d\n", (ft_check_line(data->map_tab[i])));
-		printf("\n");
-		i++;
-	}
-	
+	// ft_full_map_error_check(fd, data);
 	
 	countline = 1;
 	if (argc == 1)

@@ -50,7 +50,7 @@ int ft_is_ones_only(char *line)
 	return (1);
 }
 
-int ft_is_closed(char *line)
+int ft_is_one_ended(char *line)
 {
 	int i;
 	int j;
@@ -83,3 +83,5 @@ int 	ft_is_possible_character(char *line)
 	}
 	return (1);
 }
+
+

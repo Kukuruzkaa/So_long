@@ -37,8 +37,9 @@ int     ft_get_width(t_data *data)
     int width;
     int i;
 
-    if (data->map_tab[i])
-        width = ft_strlen(data->map_tab[i]);
+    i = 0;
+ 
+    width = ft_strlen(data->map_tab[i]);
     return (width);
 }
 

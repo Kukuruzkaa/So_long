@@ -20,6 +20,7 @@ SRCS 			= so_long.c \
 				so_long_utils.c \
 				main.c \
 				map_checker.c \
+				map_parsing.c \
 				#minilibx.c \
 
 OBJS			= $(SRCS:%.c=%.o)

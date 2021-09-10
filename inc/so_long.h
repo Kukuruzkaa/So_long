@@ -20,10 +20,14 @@ typedef struct s_data {
 }				t_data;
 
 void    ft_read_map(char *file, t_data *data);
-int     ft_get_width(char *file);
-int     ft_check_length(t_data *data);
-int     ft_check_wall(char *line);
-int     ft_check_line(char *line);
-
+void 	ft_full_map_error_check(int fd, t_data *data);
+int     ft_get_height(t_data *data);
+int     ft_get_width(t_data *data);
+int 	ft_is_rectangular(t_data *data);
+int	    ft_is_same_length(t_data *data);
+int     ft_is_ones_only(char *line);
+int     ft_is_one_ended(char *line);
+int 	ft_is_possible_character(char *line);
+void 	ft_cep(char *line);
 
 #endif
