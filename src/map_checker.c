@@ -14,10 +14,7 @@
 
 int 	ft_is_rectangular(t_data *data)
 {
-	data->width = ft_get_width(data);
-	data->height = ft_get_height(data);
-
-	if  (data->height > data->width)
+	if  (data->height == data->width)
 		return (0);
 	return (1);
 }

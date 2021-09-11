@@ -22,8 +22,8 @@ void 	ft_cep(char *line)
 	c = 0;
 	e = 0;
 	p = 0;
-	i = -1;
-	while (line[++i])
+	i = 0;
+	while (line[i])
 	{
 		if (line[i] == 'C')
 			c++;
@@ -31,6 +31,7 @@ void 	ft_cep(char *line)
 			e++;
 		else if (line[i] == 'P')
 			p++;
+		i++;
 	}
 	if ( c < 1 || e < 1 || p < 1)
 		ft_putstr_fd("Error : not enough game elements\n", 2);
@@ -48,14 +49,17 @@ void 	ft_full_map_error_check(int fd, t_data *data)
 		ft_putstr_fd("Error : the map is not rectangular\n", 2);
 	while (data->map_tab[i])
 	{
-		if (ft_is_ones_only(data->map_tab[i]) == 0 
-			|| ft_is_one_ended(data->map_tab[i]) == 0)
+		if (ft_is_ones_only(data->map_tab[i]) == 0 || ft_is_one_ended(data->map_tab[i]) == 0)
 			ft_putstr_fd("Error : the map is not closed\n", 2);
-		else if (ft_is_possible_character(data->map_tab[i]) == 0)
+		if (ft_is_possible_character(data->map_tab[i]) == 0)
 			ft_putstr_fd("Error : not allowed character\n", 2);
-		else
-			ft_cep(data->map_tab[i]);
+		i++;
 	}
-	i++;	
+	i =0;
+	while (data->map_tab[i])
+	{
+		ft_cep(data->map_tab[i]);
+		i++;
+	}
 }
 

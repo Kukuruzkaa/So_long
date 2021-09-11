@@ -25,10 +25,15 @@ void    ft_init(t_data *data)
 int     ft_get_height(t_data *data)
 {
     int height;
+    int i;
 
     height = 0;
-    while (data->map_tab[height])
+    i = 0;
+    while (data->map_tab[i])
+    {
         height++;
+        i++;
+    }
     return (height);
 }
 
@@ -38,6 +43,7 @@ int     ft_get_width(t_data *data)
     int i;
 
     i = 0;
+    width = 0;
  
     width = ft_strlen(data->map_tab[i]);
     return (width);
