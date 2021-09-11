@@ -12,9 +12,10 @@
 
 #include "so_long.h"
 
-void 	ft_cep(char *line)
+void 	ft_cep(t_data *data)
 {
 	int i;
+	int j;
 	int c;
 	int e;
 	int p;
@@ -23,14 +24,19 @@ void 	ft_cep(char *line)
 	e = 0;
 	p = 0;
 	i = 0;
-	while (line[i])
+	j = 0;
+	while (data->map_tab[i])
 	{
-		if (line[i] == 'C')
-			c++;
-		else if (line[i] == 'E')
-			e++;
-		else if (line[i] == 'P')
-			p++;
+		while (j <= data->width)
+		{
+			if (data->map_tab[i][j] == 'C')
+				c++;
+			else if (data->map_tab[i][j] == 'E')
+				e++;
+			else if (data->map_tab[i][j] == 'P')
+				p++;
+			j++;
+		}
 		i++;
 	}
 	if ( c < 1 || e < 1 || p < 1)
@@ -55,11 +61,6 @@ void 	ft_full_map_error_check(int fd, t_data *data)
 			ft_putstr_fd("Error : not allowed character\n", 2);
 		i++;
 	}
-	i =0;
-	while (data->map_tab[i])
-	{
-		ft_cep(data->map_tab[i]);
-		i++;
-	}
+	ft_cep(data);
 }
 

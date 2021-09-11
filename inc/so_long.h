@@ -28,6 +28,6 @@ int	    ft_is_same_length(t_data *data);
 int     ft_is_ones_only(char *line);
 int     ft_is_one_ended(char *line);
 int 	ft_is_possible_character(char *line);
-void 	ft_cep(char *line);
+void 	ft_cep(t_data *data);
 
 #endif
