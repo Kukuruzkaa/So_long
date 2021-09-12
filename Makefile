@@ -39,14 +39,14 @@ all:			$(NAME)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p ${@D}
-	${CC} ${CFLAGS} -I./inc -c $< -o $@
+	${CC} ${CFLAGS} ${FSAN} -I./inc -c $< -o $@
 
 $(LIBFT):
 				@make bonus -C Libft
 
 $(NAME):		$(OBJS) $(LIBFT)
 				# make -C ${MINILIBX}
-				$(CC) -o $(NAME) $(OBJS) Libft/libft.a
+				$(CC) ${FSAN} -o $(NAME) $(OBJS) Libft/libft.a
 
 clean:
 				$(RM) $(OBJDIR)

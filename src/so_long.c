@@ -32,9 +32,10 @@ int		main(int argc, char **argv)
 	(void) argc;
 
  	data = (t_data*)malloc(sizeof(t_data));
-
+	
 	ft_read_map(argv[1], data);
-
+	data->height = ft_get_height(data);
+	data->width = ft_get_width(data);
 	// data->mlx_ptr = mlx_init();
 	// data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, "so_long");
 	// for (int x = 230; x < 260; x++)
@@ -50,7 +51,7 @@ int		main(int argc, char **argv)
 
 	while (data->map_tab[i] != NULL)
 	{
-		for (int j = 0; j < data->width - 1; j++)
+		for (int j = 0; j < data->width; j++)
 			printf ("%c", data->map_tab[i][j]);
 		printf("\n");
 		i++;
