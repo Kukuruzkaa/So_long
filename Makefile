@@ -13,16 +13,26 @@
 NAME			= so_long
 
 LIBFT 			= Libft/libft.a
-# MINILIBX        = minilibx-linux
-# LIBS 			= -LLibft -L${MINILIBX} -lft -lmlx -lX11 -lXext -lm -lbsd
+
+OS = $(shell uname -s)
+
+ifeq ($(OS), Linux)
+MINILIBX        = minilibx-linux
+LIBS 			= -LLibft -L${MINILIBX} -lft -lmlx -lX11 -lXext -lm -lbsd
+
+else 
+ifeq ($(OS), Darwin)
+MINILIBX        = minilibx-macos
+LIBS 			= -LLibft -L${MINILIBX} -lmlx -framework OpenGL -framework AppKit
+endif
+endif
 
 SRCS 			= so_long.c \
 				so_long_utils.c \
 				main.c \
 				map_checker.c \
 				map_parsing.c \
-				#minilibx.c \
-
+				
 OBJS			= $(SRCS:%.c=%.o)
 
 RM 				= rm -rf
@@ -45,18 +55,18 @@ $(LIBFT):
 				@make bonus -C Libft
 
 $(NAME):		$(OBJS) $(LIBFT)
-				# make -C ${MINILIBX}
-				$(CC) ${FSAN} -o $(NAME) $(OBJS) Libft/libft.a
+				make -C ${MINILIBX}
+				$(CC) ${FSAN} -o $(NAME) $(OBJS) $(LIBS) Libft/libft.a
 
 clean:
 				$(RM) $(OBJDIR)
 				make clean -C Libft
-				# make -C ${MINILIBX} clean
+				make -C ${MINILIBX} clean
 				
 fclean:			clean
 				$(RM) $(NAME)
 				make fclean -C Libft
-				# make -C ${MINILIBX} clean
+				make -C ${MINILIBX} clean
 
 re: 			fclean all
 
