@@ -19,14 +19,20 @@ int	deal_key(int key, void *data)
 	return (0);
 }
 
+void 	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char *dst;
+
+	dst = (data)->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
 int		main(int argc, char **argv)
 {
 	t_data *data;
 	int i;
-	// char *line;
 	int fd;
-	// int ret;
-	// int countline;
+
 	fd = 0;
 	i = 0;
 
@@ -34,20 +40,19 @@ int		main(int argc, char **argv)
 
  	data = (t_data*)malloc(sizeof(t_data));
 	
+	
 	ft_read_map(argv[1], data);
 	data->height = ft_get_height(data);
 	data->width = ft_get_width(data);
 	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, "so_long");
-	for (int x = 230; x < 260; x++)
-	{
-		for (int y = 230; y < 260; y++)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x00FF00);
-		}
-	}
-	mlx_key_hook(data->win_ptr, deal_key, NULL);
+	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1080, "so_long");
+	data->img = mlx_new_image(data->mlx_ptr, 1920, 1080);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
+	my_mlx_pixel_put((data)->img, 5, 5, 0x00FF0000);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
 	mlx_loop(data->mlx_ptr);
+	mlx_key_hook(data->win_ptr, deal_key, NULL);
+	
 
 
 	while (data->map_tab[i] != NULL)

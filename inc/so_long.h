@@ -17,6 +17,11 @@ typedef struct s_data {
     
 	void *mlx_ptr;
 	void *win_ptr;
+    void *img;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
 }				t_data;
 
 void    ft_read_map(char *file, t_data *data);
