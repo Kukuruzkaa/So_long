@@ -20,11 +20,11 @@ void    ft_init(t_data *data)
     
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
-    data->img = NULL;
-    data->addr = NULL;
-    data->bits_per_pixel = 0;
-    data->endian = 0;
-    data->line_length = 0;
+    // data->img = NULL;
+    // data->addr = NULL;
+    // data->bits_per_pixel = 0;
+    // data->endian = 0;
+    // data->line_length = 0;
 }
 
 int     ft_get_height(t_data *data)
