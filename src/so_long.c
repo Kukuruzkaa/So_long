@@ -12,25 +12,96 @@
 
 #include "so_long.h"
 
-int	deal_key(int key, t_data *data)
+int	deal_key(int key, t_player *player)
 {
-	(void) data;
-	printf ("%c", key);
+	// (void)data;
+	printf("key %d\n", key);
+	if (key == LEFT || key == A)
+		player->ppos_x += -1;
+	else if (key == RIGHT || key == D)
+		player->ppos_x += 1;
+	else if (key == UP || key == W)
+		player->ppos_y += -1;
+	else if (key == DOWN || key == S)
+		player->ppos_y += 1;
+	
 	return (0);
 	
 }
 
-void 	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void my_mlx_sprite_put (t_data *data, void *dest, t_frame *frame, int x, int y)
+{
+    int i;
+    int start;
+
+    i = 0;
+    start = (frame->bits_per_pixel / 8) * (x + y * data->w_width);
+    while (i < frame->s_height)
+    {
+        ft_memcpy(dest + start + i * data->w_width * frame->bits_per_pixel, frame->addr + frame->bits_per_pixel * frame->s_width * i, frame->bits_per_pixel * frame->s_width);
+        i++;
+    }
+}
+
+void 	my_mlx_pixel_put(t_frame *frame, int x, int y, int color)
 {
 	char *dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = frame->addr + (y * frame->line_length + x * (frame->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+void 	file_to_image(t_data *data, t_frame *frame, char *img)
+{
+	int fd;
+
+	fd = open(img, O_RDONLY, 0);
+	if (fd < 0)
+		return ;
+	frame->img = mlx_xpm_file_to_image(data->mlx_ptr, img, &frame->s_width, &frame->s_height);
+	if (!frame->img)
+		return ;
+	frame->addr = mlx_get_data_addr(frame->img, &frame->bits_per_pixel, &frame->line_length, &frame->endian);
+	close (fd);
+}
+
+void 	data_init(t_data *data, t_frame *frame, t_player *player, int width, int height)
+{
+	data->mlx_ptr = mlx_init();
+	file_to_image(data, frame, SPRITE);
+	data->w_width = width * frame->s_width;
+	data->w_height = height * frame->s_height;
+	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
+	player->ppos_x = 0;
+	player->ppos_y = 0;
+
+}
+
+int 	game_frame(t_data *data, t_player *player, t_frame *frame)
+{
+	int bp;
+	int x;
+	int y;
+	void *data_image;
+
+	data->image = mlx_new_image(data->mlx_ptr, data->w_width, data->w_height);
+	data_image = mlx_get_data_addr(data->image, &bp, &bp, &bp);
+
+	x = player->ppos_x * frame->s_width;
+	y = player->ppos_y * frame->s_height;
+
+	my_mlx_sprite_put(data, data_image, frame, x, y);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
+	return (0);
+
 }
 
 int		main(int argc, char **argv)
 {
 	t_data *data;
+	t_frame *frame;
+	t_player *player;
+
 	int i;
 	int fd;
 
@@ -38,24 +109,22 @@ int		main(int argc, char **argv)
 	i = 0;
 
 	(void) argc;
-
  	data = (t_data*)malloc(sizeof(t_data));
-	
-	
+	frame = (t_frame*)malloc(sizeof(t_frame));
+	player = (t_player*)malloc(sizeof(t_player));
+
 	ft_read_map(argv[1], data);
 	data->height = ft_get_height(data);
 	data->width = ft_get_width(data);
-	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1080, "so_long");
-	data->img = mlx_new_image(data->mlx_ptr, 1920, 1080);
-	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
-	my_mlx_pixel_put(data, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
+
+	data_init(data, frame, player, WINDOW_SIZE_X, WINDOZ_SIZE_Y);
 	mlx_key_hook(data->win_ptr, deal_key, &data);
+	mlx_loop_hook(data->mlx_ptr, &game_frame, &data);
 	mlx_loop(data->mlx_ptr);
+	// my_mlx_pixel_put(frame, 5, 5, 0x00FF0000);
 	
-
-
+	
+	
 	while (data->map_tab[i] != NULL)
 	{
 		for (int j = 0; j < data->width; j++)

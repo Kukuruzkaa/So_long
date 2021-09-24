@@ -89,6 +89,8 @@ void  ft_read_map(char *file, t_data *data)
     line = NULL;
     
     fd = open(file, O_RDONLY, 0);
+        if (fd < 0)
+            return ;
     while ((ret = get_next_line(fd, &line) == 1))
     {
        if (line != NULL && ft_strlen(line) > 0)
