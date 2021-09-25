@@ -24,7 +24,6 @@ int	deal_key(int key, void *param)
 		data->player.ppos_y += -1;
 	else if (key == DOWN || key == S)
 		data->player.ppos_y += 1;
-	
 	return (0);
 }
 
@@ -122,7 +121,7 @@ int		main(int argc, char **argv)
 	data->width = ft_get_width(data);
 
 	data_init(data, WINDOW_SIZE_X, WINDOZ_SIZE_Y);
-	mlx_key_hook(data->win_ptr, deal_key, &data);
+	mlx_key_hook(data->win_ptr, &deal_key, data);
 	mlx_loop_hook(data->mlx_ptr, &game_frame, data);
 	mlx_loop(data->mlx_ptr);
 	// my_mlx_pixel_put(frame, 5, 5, 0x00FF0000);
