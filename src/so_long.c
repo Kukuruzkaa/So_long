@@ -24,6 +24,13 @@ int	deal_key(int key, void *param)
 		data->player.ppos_y += -1;
 	else if (key == DOWN || key == S)
 		data->player.ppos_y += 1;
+	// data->player.ppos_x = data->player.ppos_x * (data->w_width / data->sprite.s_width);
+	// data->player.ppos_y = data->player.ppos_y * (data->w_height / data->sprite.s_height);
+	// if (data->player.ppos_x < 0)
+	// 	data->player.ppos_x = (data->w_width / data->sprite.s_width) - 1;
+	// if (data->player.ppos_y < 0)
+	// 	data->player.ppos_y = (data->w_height / data->sprite.s_height) - 1;
+
 	return (0);
 }
 
@@ -95,6 +102,7 @@ int 	game_frame(void *param)
 	y = data->player.ppos_y * avatar->s_height;
 	my_mlx_sprite_put(data, data_image, avatar, x, y);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, data->image);
 	return (0);
 
 }
