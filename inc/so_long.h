@@ -12,8 +12,8 @@
 # define SPRITE "Star.xpm"
 
 
-# define WINDOW_SIZE_X 500
-# define WINDOZ_SIZE_Y 500
+# define WINDOW_SIZE_X 10
+# define WINDOZ_SIZE_Y 8
 
 # define UP 126
 # define DOWN 125
@@ -24,20 +24,6 @@
 # define A 1
 # define D 2
 # define ESC 53
-
-typedef struct s_data {
-
-    int     width;
-    int     height;
-    char    **map_tab;
-    
-	void    *mlx_ptr;
-	void    *win_ptr;
-    void    *image;
-    int     w_width;
-    int     w_height;
-    
-}				t_data;
 
 typedef struct s_frame {
 
@@ -56,6 +42,23 @@ typedef struct s_player {
     int ppos_y;
 
 }               t_player;
+
+typedef struct s_data {
+
+    int     width;
+    int     height;
+    char    **map_tab;
+    
+	void    *mlx_ptr;
+	void    *win_ptr;
+    void    *image;
+    int     w_width;
+    int     w_height;
+    t_frame sprite;
+    t_player player;
+    
+}				t_data;
+
 
 
 void    ft_read_map(char *file, t_data *data);
