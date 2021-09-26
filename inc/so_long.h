@@ -13,15 +13,15 @@
 
 
 # define WINDOW_SIZE_X 10
-# define WINDOZ_SIZE_Y 8
+# define WINDOW_SIZE_Y 10
 
 # define UP 126
 # define DOWN 125
-# define LEFT 124
-# define RIGHT 123
+# define LEFT 123
+# define RIGHT 124
 # define W 13
-# define S 0
-# define A 1
+# define S 1
+# define A 0
 # define D 2
 # define ESC 53
 

@@ -24,13 +24,19 @@ int	deal_key(int key, void *param)
 		data->player.ppos_y += -1;
 	else if (key == DOWN || key == S)
 		data->player.ppos_y += 1;
-	// data->player.ppos_x = data->player.ppos_x * (data->w_width / data->sprite.s_width);
-	// data->player.ppos_y = data->player.ppos_y * (data->w_height / data->sprite.s_height);
-	// if (data->player.ppos_x < 0)
-	// 	data->player.ppos_x = (data->w_width / data->sprite.s_width) - 1;
-	// if (data->player.ppos_y < 0)
-	// 	data->player.ppos_y = (data->w_height / data->sprite.s_height) - 1;
 
+	if (WINDOW_SIZE_X - 1 < 0)
+		data->player.ppos_x = 0;
+	if (data->player.ppos_x > WINDOW_SIZE_X - 1)
+		data->player.ppos_x = WINDOW_SIZE_X - 1;
+	if (data->player.ppos_x < 0)
+		data->player.ppos_x = 0;
+	if (WINDOW_SIZE_Y - 1 < 0)
+		data->player.ppos_y = 0;
+	if (data->player.ppos_y > WINDOW_SIZE_Y - 1)
+		data->player.ppos_y = WINDOW_SIZE_Y - 1;
+	if (data->player.ppos_y < 0)
+		data->player.ppos_y = 0;
 	return (0);
 }
 
@@ -52,13 +58,24 @@ void my_mlx_sprite_put (t_data *data, void *dest, t_frame *frame, int x, int y)
     }
 }
 
-void 	my_mlx_pixel_put(t_frame *frame, int x, int y, int color)
+void	get_image_transparency(t_frame *frame)
 {
-	char *dst;
-
-	dst = frame->addr + (y * frame->line_length + x * (frame->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	for (int i = 0; i < frame->s_height; i++)
+	{
+		for (int j = 0; j < frame->s_width; j++)
+		{
+			frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 3] = 0x0F;
+		}
+	}
 }
+
+// void 	my_mlx_pixel_put(t_frame *frame, int x, int y, int color)
+// {
+// 	char *dst;
+
+// 	dst = frame->addr + (y * frame->line_length + x * (frame->bits_per_pixel / 8));
+// 	*(unsigned int*)dst = color;
+// }
 
 void 	file_to_image(t_data *data, t_frame *frame, char *img)
 {
@@ -78,6 +95,7 @@ void 	data_init(t_data *data, int width, int height)
 {
 	data->mlx_ptr = mlx_init();
 	file_to_image(data, &(data->sprite), SPRITE);
+	get_image_transparency(&(data->sprite));
 	data->w_width = width * data->sprite.s_width;
 	data->w_height = height * data->sprite.s_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
@@ -128,7 +146,7 @@ int		main(int argc, char **argv)
 	data->height = ft_get_height(data);
 	data->width = ft_get_width(data);
 
-	data_init(data, WINDOW_SIZE_X, WINDOZ_SIZE_Y);
+	data_init(data, WINDOW_SIZE_X, WINDOW_SIZE_Y);
 	mlx_key_hook(data->win_ptr, &deal_key, data);
 	mlx_loop_hook(data->mlx_ptr, &game_frame, data);
 	mlx_loop(data->mlx_ptr);
