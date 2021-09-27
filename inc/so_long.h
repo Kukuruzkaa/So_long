@@ -28,7 +28,6 @@
 typedef struct s_frame {
 
     void    *img;
-    // void    *item;
     char    *addr;
     int     bits_per_pixel;
     int     line_length;
@@ -36,6 +35,12 @@ typedef struct s_frame {
     int     s_width;
     int     s_height;
 }               t_frame;
+
+typedef struct s_item {
+
+    int ipos_x;
+    int ipos_y;
+}              t_item;
 
 typedef struct s_player {
 
@@ -56,7 +61,12 @@ typedef struct s_data {
     int     w_width;
     int     w_height;
     t_frame sprite;
+    t_frame wall;
+    t_frame background;
+    t_frame exit;
+    t_frame collectible;
     t_player player;
+    t_item   item;
     
 }				t_data;
 
