@@ -10,7 +10,7 @@
 
 # define NAME "So_long"
 # define SPRITE "Star.xpm"
-
+# define COLLECTIBLE "Fleur.xpm"
 
 # define WINDOW_SIZE_X 10
 # define WINDOW_SIZE_Y 10
@@ -28,6 +28,7 @@
 typedef struct s_frame {
 
     void    *img;
+    // void    *item;
     char    *addr;
     int     bits_per_pixel;
     int     line_length;
