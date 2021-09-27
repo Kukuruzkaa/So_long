@@ -59,33 +59,23 @@ void my_mlx_sprite_put (t_data *data, void *dest, t_frame *frame, int x, int y)
 
 void	get_image_transparency(t_frame *frame)
 {
-	// int i;
-	// int j;
-	// char *color;
+	int i;
+	int j;
 
-	// i = 0;
-	// j = 0;
-	// color = "0xFFFFFF";
+	i = 0;
+	j = 0;
 
-	// while (i < frame->s_height)
-	// {
-	// 	while (j < frame->s_width)
-	// 	{
-	// 		if (frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8] == *color)
-	// 			frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 3] = 0xFF;
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-	for (int i = 0; i < frame->s_height; i++)
+	while (i < frame->s_height)
 	{
-		for (int j = 0; j < frame->s_width; j++)
+		while (j < frame->s_width)
 		{
 			if (frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 0] == (char)0xff
 				&& frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 1] == (char)255
 				&& frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 2] == (char)255)
 					frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 3] = 0xFF;
+			j++;
 		}
+		i++;
 	}
 }
 
@@ -114,7 +104,7 @@ void 	file_to_image(t_data *data, t_frame *frame, char *img)
 void 	data_init(t_data *data, int width, int height)
 {
 	data->mlx_ptr = mlx_init();
-	file_to_image(data, &(data->sprite), COLLECTIBLE);
+	file_to_image(data, &(data->sprite), SPRITE);
 	get_image_transparency(&(data->sprite));
 	data->w_width = width * data->sprite.s_width;
 	data->w_height = height * data->sprite.s_height;

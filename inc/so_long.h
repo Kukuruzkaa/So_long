@@ -9,11 +9,11 @@
 # include "../Libft/libft.h"
 
 # define NAME "So_long"
-# define SPRITE "Star.xpm"
+# define SPRITE "Lapin.xpm"
 # define COLLECTIBLE "Fleur.xpm"
 
 # define WINDOW_SIZE_X 10
-# define WINDOW_SIZE_Y 10
+# define WINDOW_SIZE_Y 8
 
 # define UP 126
 # define DOWN 125
