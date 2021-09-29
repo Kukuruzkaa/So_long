@@ -80,5 +80,3 @@ int 	ft_is_possible_character(char *line)
 	}
 	return (1);
 }
-
-

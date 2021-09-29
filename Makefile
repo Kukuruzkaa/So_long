@@ -32,6 +32,7 @@ SRCS 			= so_long.c \
 				main.c \
 				map_checker.c \
 				map_parsing.c \
+				game_coordinates.c \
 				
 OBJS			= $(SRCS:%.c=%.o)
 

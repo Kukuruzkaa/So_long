@@ -49,6 +49,17 @@ typedef struct s_player {
 
 }               t_player;
 
+typedef struct s_exit {
+
+    int epos_x;
+    int epos_y;
+}              t_exit;
+
+typedef struct s_objects {
+    int *tex1;
+    int *tex2;
+} t_textures;
+
 typedef struct s_data {
 
     int     width;
@@ -67,7 +78,8 @@ typedef struct s_data {
     t_frame collectible;
     t_player player;
     t_item   item;
-    
+    t_exit   door;
+    t_textures textures;   
 }				t_data;
 
 

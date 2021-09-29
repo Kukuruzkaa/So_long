@@ -90,20 +90,45 @@ void	get_image_transparency(t_frame *frame)
 void 	file_to_image(t_data *data, t_frame *frame, char *img)
 {
 	int fd;
+	/*
+	int i = 0;
+	int j = 0;
+	t_frame example;
+	*/
 
 	fd = open(img, O_RDONLY, 0);
 	if (fd < 0)
 		return ;
+	
+	/*
+	example.img = mlx_xpm_file_to_image(data->mlx_ptr, img, &(frame->s_width), &(frame->s_height));
+	if (!frame->img)
+		return ;
+	example.addr = mlx_get_data_addr(example.img, &(example.bits_per_pixel), &(example.line_length), &(example.endian));	
+	*/
 	frame->img = mlx_xpm_file_to_image(data->mlx_ptr, img, &(frame->s_width), &(frame->s_height));
 	if (!frame->img)
 		return ;
 	frame->addr = mlx_get_data_addr(frame->img, &(frame->bits_per_pixel), &(frame->line_length), &(frame->endian));
+	/*
+	i = 0;
+	while (i < WINDOW_SIZE_Y)
+	{
+		while (j < WINDOW_SIZE_X)
+		{
+			data->textures.tex1[i * WINDOW_SIZE_Y + j] = example.addr[i * WINDOW_SIZE_Y + j];
+			j++;
+		}
+		i++;
+	}
+	*/
 	close (fd);
 }
 
 void 	data_init(t_data *data, int width, int height)
 {
 	data->mlx_ptr = mlx_init();
+	//data->textures.tex1 = (int *)malloc(sizeof(int) * WINDOW_SIZE_X * WINDOW_SIZE_Y);
 	file_to_image(data, &(data->sprite), SPRITE);
 	get_image_transparency(&(data->sprite));
 	data->w_width = width * data->sprite.s_width;
@@ -111,8 +136,25 @@ void 	data_init(t_data *data, int width, int height)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
 	data->player.ppos_x = 0;
 	data->player.ppos_y = 0;
-
 }
+/*
+static int buffer_to_image(t_data *data)
+{
+	int i = 0;
+	int j = 0;
+	while (j < WINDOW_SIZE_Y)
+	{
+		i = 0;
+		while (i < WINDOW_SIZE_X)
+		{
+			(*data)->sprite.addr[j * WINDOW_SIZE_Y + i] = data->textures.tex1[j * WINDOW_SIZE_Y + i];
+			i++;
+		}
+		j++;
+	}
+	return (0);
+}
+*/
 
 int 	game_frame(void *param)
 {
@@ -129,6 +171,8 @@ int 	game_frame(void *param)
 	x = data->player.ppos_x * avatar->s_width;
 	y = data->player.ppos_y * avatar->s_height;
 	my_mlx_sprite_put(data, data_image, avatar, x, y);
+	//buffer_to_image(data);
+	// copy buffer to image
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
 	mlx_destroy_image(data->mlx_ptr, data->image);
 	return (0);
