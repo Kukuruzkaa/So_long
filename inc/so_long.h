@@ -25,16 +25,16 @@
 # define D 2
 # define ESC 53
 
-typedef struct s_frame {
+typedef struct s_texture {
 
     void    *img;
     char    *addr;
     int     bits_per_pixel;
     int     line_length;
     int     endian;
-    int     s_width;
-    int     s_height;
-}               t_frame;
+    int     t_width;
+    int     t_height;
+}               t_texture;
 
 typedef struct s_item {
 
@@ -55,10 +55,10 @@ typedef struct s_exit {
     int epos_y;
 }              t_exit;
 
-typedef struct s_objects {
-    int *tex1;
-    int *tex2;
-} t_textures;
+// typedef struct s_objects {
+//     int *tex1;
+//     int *tex2;
+// } t_textures;
 
 typedef struct s_data {
 
@@ -71,15 +71,15 @@ typedef struct s_data {
     void    *image;
     int     w_width;
     int     w_height;
-    t_frame sprite;
-    t_frame wall;
-    t_frame background;
-    t_frame exit;
-    t_frame collectible;
+    t_texture sprite;
+    t_texture wall;
+    t_texture background;
+    t_texture exit;
+    t_texture collectible;
     t_player player;
     t_item   item;
     t_exit   door;
-    t_textures textures;   
+    // t_textures textures;   
 }				t_data;
 
 

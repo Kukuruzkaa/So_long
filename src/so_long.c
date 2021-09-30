@@ -40,24 +40,24 @@ int	deal_key(int key, void *param)
 	return (0);
 }
 
-void my_mlx_sprite_put (t_data *data, void *dest, t_frame *frame, int x, int y)
+void my_mlx_sprite_put (t_data *data, void *dest, t_texture *texture, int x, int y)
 {
     int i;
     int start;
 	int bpp;
 
-	bpp = frame->bits_per_pixel / 8;
+	bpp = texture->bits_per_pixel / 8;
     i = 0;
     start = bpp * (x + y * data->w_width);
 	
-    while (i < frame->s_height)
+    while (i < texture->t_height)
     {
-        ft_memcpy(dest + start + i * data->w_width * bpp, frame->addr + bpp * frame->s_width * i, bpp * frame->s_width);
+        ft_memcpy(dest + start + i * data->w_width * bpp, texture->addr + bpp * texture->t_width * i, bpp * texture->t_width);
         i++;
     }
 }
 
-void	get_image_transparency(t_frame *frame)
+void	get_image_transparency(t_texture *texture)
 {
 	int i;
 	int j;
@@ -65,29 +65,29 @@ void	get_image_transparency(t_frame *frame)
 	i = 0;
 	j = 0;
 
-	while (i < frame->s_height)
+	while (i < texture->t_height)
 	{
-		while (j < frame->s_width)
+		while (j < texture->t_width)
 		{
-			if (frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 0] == (char)0xff
-				&& frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 1] == (char)255
-				&& frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 2] == (char)255)
-					frame->addr[i * frame->line_length + j * frame->bits_per_pixel / 8 + 3] = 0xFF;
+			if (texture->addr[i * texture->line_length + j * texture->bits_per_pixel / 8 + 0] == (char)0xff
+				&& texture->addr[i * texture->line_length + j * texture->bits_per_pixel / 8 + 1] == (char)255
+				&& texture->addr[i * texture->line_length + j * texture->bits_per_pixel / 8 + 2] == (char)255)
+					texture->addr[i * texture->line_length + j * texture->bits_per_pixel / 8 + 3] = 0xFF;
 			j++;
 		}
 		i++;
 	}
 }
 
-// void 	my_mlx_pixel_put(t_frame *frame, int x, int y, int color)
+// void 	my_mlx_pixel_put(t_texture *texture, int x, int y, int color)
 // {
 // 	char *dst;
 
-// 	dst = frame->addr + (y * frame->line_length + x * (frame->bits_per_pixel / 8));
+// 	dst = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
 // 	*(unsigned int*)dst = color;
 // }
 
-void 	file_to_image(t_data *data, t_frame *frame, char *img)
+void 	file_to_image(t_data *data, t_texture* texture, char *img)
 {
 	int fd;
 	/*
@@ -106,10 +106,10 @@ void 	file_to_image(t_data *data, t_frame *frame, char *img)
 		return ;
 	example.addr = mlx_get_data_addr(example.img, &(example.bits_per_pixel), &(example.line_length), &(example.endian));	
 	*/
-	frame->img = mlx_xpm_file_to_image(data->mlx_ptr, img, &(frame->s_width), &(frame->s_height));
-	if (!frame->img)
+	texture->img = mlx_xpm_file_to_image(data->mlx_ptr, img, &(texture->t_width), &(texture->t_height));
+	if (!texture->img)
 		return ;
-	frame->addr = mlx_get_data_addr(frame->img, &(frame->bits_per_pixel), &(frame->line_length), &(frame->endian));
+	texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel), &(texture->line_length), &(texture->endian));
 	/*
 	i = 0;
 	while (i < WINDOW_SIZE_Y)
@@ -131,8 +131,8 @@ void 	data_init(t_data *data, int width, int height)
 	//data->textures.tex1 = (int *)malloc(sizeof(int) * WINDOW_SIZE_X * WINDOW_SIZE_Y);
 	file_to_image(data, &(data->sprite), SPRITE);
 	get_image_transparency(&(data->sprite));
-	data->w_width = width * data->sprite.s_width;
-	data->w_height = height * data->sprite.s_height;
+	data->w_width = width * data->sprite.t_width;
+	data->w_height = height * data->sprite.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
 	data->player.ppos_x = 0;
 	data->player.ppos_y = 0;
@@ -159,7 +159,7 @@ static int buffer_to_image(t_data *data)
 int 	game_frame(void *param)
 {
 	t_data *data = (t_data *)param;
-	t_frame *avatar = &(data->sprite);
+	t_texture *avatar = &(data->sprite);
 
 	int bp;
 	int x;
@@ -168,8 +168,8 @@ int 	game_frame(void *param)
 
 	data->image = mlx_new_image(data->mlx_ptr, data->w_width, data->w_height);
 	data_image = mlx_get_data_addr(data->image, &bp, &bp, &bp);
-	x = data->player.ppos_x * avatar->s_width;
-	y = data->player.ppos_y * avatar->s_height;
+	x = data->player.ppos_x * avatar->t_width;
+	y = data->player.ppos_y * avatar->t_height;
 	my_mlx_sprite_put(data, data_image, avatar, x, y);
 	//buffer_to_image(data);
 	// copy buffer to image
@@ -182,7 +182,7 @@ int 	game_frame(void *param)
 int		main(int argc, char **argv)
 {
 	t_data *data;
-	t_frame *frame;
+	t_texture *texture;
 	t_player *player;
 
 	int i;
@@ -193,7 +193,7 @@ int		main(int argc, char **argv)
 
 	(void) argc;
  	data = (t_data*)malloc(sizeof(t_data));
-	frame = (t_frame*)malloc(sizeof(t_frame));
+	texture = (t_texture*)malloc(sizeof(t_texture));
 	player = (t_player*)malloc(sizeof(t_player));
 
 	ft_read_map(argv[1], data);
@@ -204,7 +204,7 @@ int		main(int argc, char **argv)
 	mlx_key_hook(data->win_ptr, &deal_key, data);
 	mlx_loop_hook(data->mlx_ptr, &game_frame, data);
 	mlx_loop(data->mlx_ptr);
-	// my_mlx_pixel_put(frame, 5, 5, 0x00FF0000);
+	// my_mlx_pixel_put(texture, 5, 5, 0x00FF0000);
 	
 	
 	
