@@ -9,8 +9,11 @@
 # include "../Libft/libft.h"
 
 # define NAME "So_long"
-# define SPRITE "Lapin.xpm"
-# define COLLECTIBLE "Fleur.xpm"
+# define PLAYER "Wolf.xpm"
+# define COLLECTIBLE "Lapin.xpm"
+# define EXIT "Ship.xpm"
+# define WALL "Volna.xpm"
+# define BACKGROUND "Fon.xpm" 
 
 # define WINDOW_SIZE_X 10
 # define WINDOW_SIZE_Y 8
@@ -36,29 +39,33 @@ typedef struct s_texture {
     int     t_height;
 }               t_texture;
 
-typedef struct s_item {
+typedef struct  s_coordinates {
+    int x;
+    int y;
+}               t_coordinates;          
+// typedef struct s_item {
 
-    int ipos_x;
-    int ipos_y;
-}              t_item;
+//     int ipos_x;
+//     int ipos_y;
+// }              t_item;
 
-typedef struct s_player {
+// typedef struct s_player {
 
-    int ppos_x;
-    int ppos_y;
+//     int ppos_x;
+//     int ppos_y;
 
-}               t_player;
+// }               t_player;
 
-typedef struct s_exit {
+// typedef struct s_exit {
 
-    int epos_x;
-    int epos_y;
-}              t_exit;
+//     int epos_x;
+//     int epos_y;
+// }              t_exit;
 
 // typedef struct s_objects {
-//     int *tex1;
-//     int *tex2;
-// } t_textures;
+    
+    
+// } t_objects;
 
 typedef struct s_data {
 
@@ -71,14 +78,14 @@ typedef struct s_data {
     void    *image;
     int     w_width;
     int     w_height;
-    t_texture sprite;
-    t_texture wall;
-    t_texture background;
-    t_texture exit;
-    t_texture collectible;
-    t_player player;
-    t_item   item;
-    t_exit   door;
+    t_texture tex_player;
+    t_texture tex_wall;
+    t_texture tex_background;
+    t_texture tex_exit;
+    t_texture tex_collectible;
+    t_coordinates   pos_player;
+    t_coordinates   pos_collectible;
+    t_coordinates   pos_exit;
     // t_textures textures;   
 }				t_data;
 
@@ -94,5 +101,5 @@ int     ft_is_ones_only(char *line);
 int     ft_is_one_ended(char *line);
 int 	ft_is_possible_character(char *line);
 void 	ft_cep(t_data *data);
-
+void	get_coordinates(t_data *data)
 #endif

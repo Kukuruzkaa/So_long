@@ -17,26 +17,26 @@ int	deal_key(int key, void *param)
 	t_data *data = (t_data *)param;
 	printf("key %d\n", key);
 	if (key == LEFT || key == A)
-		data->player.ppos_x += -1;
+		data->pos_player.x += -1;
 	else if (key == RIGHT || key == D)
-		data->player.ppos_x += 1;
+		data->pos_player.x += 1;
 	else if (key == UP || key == W)
-		data->player.ppos_y += -1;
+		data->pos_player.y += -1;
 	else if (key == DOWN || key == S)
-		data->player.ppos_y += 1;
+		data->pos_player.y += 1;
 
 	if (WINDOW_SIZE_X - 1 < 0)
-		data->player.ppos_x = 0;
-	if (data->player.ppos_x > WINDOW_SIZE_X - 1)
-		data->player.ppos_x = WINDOW_SIZE_X - 1;
-	if (data->player.ppos_x < 0)
-		data->player.ppos_x = 0;
+		data->pos_player.x = 0;
+	if (data->pos_player.x > WINDOW_SIZE_X - 1)
+		data->pos_player.x = WINDOW_SIZE_X - 1;
+	if (data->pos_player.x < 0)
+		data->pos_player.x = 0;
 	if (WINDOW_SIZE_Y - 1 < 0)
-		data->player.ppos_y = 0;
-	if (data->player.ppos_y > WINDOW_SIZE_Y - 1)
-		data->player.ppos_y = WINDOW_SIZE_Y - 1;
-	if (data->player.ppos_y < 0)
-		data->player.ppos_y = 0;
+		data->pos_player.y = 0;
+	if (data->pos_player.y > WINDOW_SIZE_Y - 1)
+		data->pos_player.y = WINDOW_SIZE_Y - 1;
+	if (data->pos_player.y < 0)
+		data->pos_player.y = 0;
 	return (0);
 }
 
@@ -125,17 +125,25 @@ void 	file_to_image(t_data *data, t_texture* texture, char *img)
 	close (fd);
 }
 
+void 	load_textures(t_data *data)
+{
+	file_to_image(data, &(data->tex_player), PLAYER);
+	file_to_image(data, &(data->tex_collectible), COLLECTIBLE);
+	file_to_image(data, &(data->tex_wall), WALL);
+	file_to_image(data, &(data->tex_background), BACKGROUND);
+	file_to_image(data, &(data->tex_exit), EXIT);
+}
 void 	data_init(t_data *data, int width, int height)
 {
 	data->mlx_ptr = mlx_init();
-	//data->textures.tex1 = (int *)malloc(sizeof(int) * WINDOW_SIZE_X * WINDOW_SIZE_Y);
-	file_to_image(data, &(data->sprite), SPRITE);
-	get_image_transparency(&(data->sprite));
-	data->w_width = width * data->sprite.t_width;
-	data->w_height = height * data->sprite.t_height;
+	load_textures(data);
+	// get_image_transparency(&(data->sprite));
+	data->w_width = width * data->tex_player.t_width;
+	data->w_height = height * data->tex_player.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
-	data->player.ppos_x = 0;
-	data->player.ppos_y = 0;
+	game_coordinates(data);
+// 	data->pos_player.x = 0;
+// 	data->player.ppos_y = 0;
 }
 /*
 static int buffer_to_image(t_data *data)
@@ -159,18 +167,36 @@ static int buffer_to_image(t_data *data)
 int 	game_frame(void *param)
 {
 	t_data *data = (t_data *)param;
-	t_texture *avatar = &(data->sprite);
+	// t_texture *texture = &(data->sprite);
 
 	int bp;
 	int x;
 	int y;
-	void *data_image;
+	void *data_addr;
 
 	data->image = mlx_new_image(data->mlx_ptr, data->w_width, data->w_height);
-	data_image = mlx_get_data_addr(data->image, &bp, &bp, &bp);
-	x = data->player.ppos_x * avatar->t_width;
-	y = data->player.ppos_y * avatar->t_height;
-	my_mlx_sprite_put(data, data_image, avatar, x, y);
+	data_addr = mlx_get_data_addr(data->image, &bp, &bp, &bp);
+	x = data->pos_player.x * avatar->t_width;
+	y = data->pos_player.y * avatar->t_height;
+	my_mlx_sprite_put(data, data_addr, avatar, x, y);
+	while (y)
+	{
+		while (x)
+		{
+			if (bidule == player)
+			{
+				texture = &(data->...tex_player)
+				my_mlx_sprite_put(data, data_addr, texture, x, y);
+
+			}
+			if (bidule == collectible)
+			{
+				texture = &(data->...tex_player)
+				my_mlx_sprite_put(data, data_addr, texture, x, y);
+
+			}
+		}
+	}
 	//buffer_to_image(data);
 	// copy buffer to image
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);

@@ -25,18 +25,18 @@ void	get_coordinates(t_data *data)
 		{
 			if (data->map_tab[y][x] == 'P')
 			{
-				data->player.ppos_x = x;
-				data->player.ppos_y = y;
+				data->pos_player.x = x;
+				data->pos_player.y = y;
 			}
 			else if (data->map_tab[y][x] == 'C')
 			{
-				data->item.ipos_x = x;
-				data->item.ipos_y = y;
+				data->pos_collectible.x = x;
+				data->pos_collectible.y = y;
 			}
 			else if (data->map_tab[y][x] == 'E')
 			{
-				data->door.epos_x = x;
-				data->door.epos_y = y;
+				data->pos_exit.x = x;
+				data->pos_exit.y = y;
 			}
 			x++;
 		}
