@@ -43,29 +43,6 @@ typedef struct  s_coordinates {
     int x;
     int y;
 }               t_coordinates;          
-// typedef struct s_item {
-
-//     int ipos_x;
-//     int ipos_y;
-// }              t_item;
-
-// typedef struct s_player {
-
-//     int ppos_x;
-//     int ppos_y;
-
-// }               t_player;
-
-// typedef struct s_exit {
-
-//     int epos_x;
-//     int epos_y;
-// }              t_exit;
-
-// typedef struct s_objects {
-    
-    
-// } t_objects;
 
 typedef struct s_data {
 
@@ -85,8 +62,9 @@ typedef struct s_data {
     t_texture tex_collectible;
     t_coordinates   pos_player;
     t_coordinates   pos_collectible;
-    t_coordinates   pos_exit;
-    // t_textures textures;   
+    t_coordinates   pos_exit; 
+    t_coordinates   pos_wall;
+    t_coordinates   pos_back; 
 }				t_data;
 
 
@@ -101,5 +79,5 @@ int     ft_is_ones_only(char *line);
 int     ft_is_one_ended(char *line);
 int 	ft_is_possible_character(char *line);
 void 	ft_cep(t_data *data);
-void	get_coordinates(t_data *data)
+void	get_coordinates(t_data *data);
 #endif

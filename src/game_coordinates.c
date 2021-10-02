@@ -28,16 +28,6 @@ void	get_coordinates(t_data *data)
 				data->pos_player.x = x;
 				data->pos_player.y = y;
 			}
-			else if (data->map_tab[y][x] == 'C')
-			{
-				data->pos_collectible.x = x;
-				data->pos_collectible.y = y;
-			}
-			else if (data->map_tab[y][x] == 'E')
-			{
-				data->pos_exit.x = x;
-				data->pos_exit.y = y;
-			}
 			x++;
 		}
 		y++;
