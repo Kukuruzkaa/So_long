@@ -5,6 +5,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
+# include <stdlib.h>
 # include <fcntl.h>
 # include "../Libft/libft.h"
 
@@ -80,4 +81,7 @@ int     ft_is_one_ended(char *line);
 int 	ft_is_possible_character(char *line);
 void 	ft_cep(t_data *data);
 void	get_coordinates(t_data *data);
+int	    quit_game(void *param);
+
+
 #endif

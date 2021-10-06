@@ -24,6 +24,8 @@ int	deal_key(int key, void *param)
 		data->pos_player.y += -1;
 	else if (key == DOWN || key == S)
 		data->pos_player.y += 1;
+	else if (key == ESC)
+		// quit_game(data);
 
 	if (data->width - 1 < 0)
 		data->pos_player.x = 0;
@@ -79,14 +81,6 @@ void	get_image_transparency(t_texture *texture)
 	}
 }
 
-// void 	my_mlx_pixel_put(t_texture *texture, int x, int y, int color)
-// {
-// 	char *dst;
-
-// 	dst = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
-// 	*(unsigned int*)dst = color;
-// }
-
 void 	file_to_image(t_data *data, t_texture* texture, char *img)
 {
 	int fd;
@@ -114,6 +108,10 @@ void 	data_init(t_data *data, int width, int height)
 	data->mlx_ptr = mlx_init();
 	load_textures(data);
 	get_image_transparency(&(data->tex_player));
+	get_image_transparency(&(data->tex_collectible));
+	get_image_transparency(&(data->tex_exit));
+	get_image_transparency(&(data->tex_wall));
+	get_image_transparency(&(data->tex_background));
 	data->w_width = width * data->tex_player.t_width;
 	data->w_height = height * data->tex_player.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
@@ -140,6 +138,16 @@ int 	game_frame(void *param)
 		{
 			texture = &(data->tex_background);
 			my_mlx_sprite_put(data, data_addr, texture, x * texture->t_width, y * texture->t_height);
+			x++;
+		}
+		y++;
+	}
+	y = 0;
+	while (y < data->height) // while (data->map_tab[y])
+	{	
+		x = 0;
+		while (x < data->width) // while (data->map_tab[x])
+		{
 			if (data->map_tab[y][x] == 'C')
 			{
 				texture = &(data->tex_collectible);
@@ -162,8 +170,26 @@ int 	game_frame(void *param)
 	texture = &(data->tex_player);
 	my_mlx_sprite_put(data, data_addr, texture, data->pos_player.x * texture->t_width, data->pos_player.y * texture->t_height);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
-	mlx_destroy_image(data->mlx_ptr, data->image);
+	// mlx_destroy_image(data->mlx_ptr, data->image);
+	data->image = NULL;
 	return (0);
+}
+
+int	quit_game(void *param)
+{
+	t_data *data = (t_data *)param;
+
+	mlx_destroy_image(data->mlx_ptr, &data->tex_player);
+	mlx_destroy_image(data->mlx_ptr, &data->tex_collectible);
+	mlx_destroy_image(data->mlx_ptr, &data->tex_exit);
+	mlx_destroy_image(data->mlx_ptr, &data->tex_wall);
+	mlx_destroy_image(data->mlx_ptr, &data->tex_background);
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_image(data->mlx_ptr, data->image);
+	// mlx_destroy_display(data->mlx_ptr);
+	// mlx_loop_end(data->mlx_ptr);
+	free(data->mlx_ptr);
+	return 0;
 }
 
 int		main(int argc, char **argv)
@@ -200,6 +226,7 @@ int		main(int argc, char **argv)
 
 	data_init(data, data->width, data->height);
 	mlx_key_hook(data->win_ptr, &deal_key, data);
+	// mlx_hook(data->win_ptr, 33, 1L << 17, quit_game, data);
 	mlx_loop_hook(data->mlx_ptr, &game_frame, data);
 	mlx_loop(data->mlx_ptr);
 	// my_mlx_pixel_put(texture, 5, 5, 0x00FF0000);
