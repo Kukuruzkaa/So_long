@@ -12,18 +12,85 @@
 
 #include "so_long.h"
 
+int 	check_wall(t_data *data)
+{
+	int y;
+	int x;
+
+	y = data->pos_player.y;
+	x = data->pos_player.x;
+
+	if (data->map_tab[y][x - 1] == '1' || data->map_tab[y][x + 1] == '1' || data->map_tab[y - 1][x] == '1' || data->map_tab[y + 1][x] == '1')
+		return (1);
+	// else if (data->map_tab[y][x + 1] == '1')
+	// 	return (1);
+	// else if (data->map_tab[y - 1][x] == '1')
+	// 	return (1);
+	// else if (data->map_tab[y + 1][x] == '1')
+	// 	return (1);
+	return (0);
+}
+
+
+void 	player_move(t_data *data)
+{
+	int y;
+	int x;
+
+	y = data->pos_player.y;
+	x = data->pos_player.x;
+
+	if (data->map_tab[y][x] == '0' || data->map_tab[y][x] == 'C')
+	{
+		if (data->map_tab[y][x] == 'C')
+		{
+			mlx_destroy_image(data->mlx_ptr, &data->tex_collectible);
+			data->map_tab[y][x] ='P';
+			data->map_tab[data->pos_player.y][data->pos_player.x] = '0';
+		}
+	}
+	if (data->map_tab[y][x] == 'E')
+	{
+		quit_game(data);
+	}
+}
+
 int	deal_key(int key, void *param)
 {
 	t_data *data = (t_data *)param;
 	printf("key %d\n", key);
 	if (key == LEFT || key == A)
-		data->pos_player.x += -1;
+	{	
+		// if (check_wall(data) == 1)
+		// 	data->pos_player.x = data->pos_player.x;
+		// else 
+			data->pos_player.x += -1;
+			// player_move(data);
+	}
 	else if (key == RIGHT || key == D)
-		data->pos_player.x += 1;
+	{	
+		// if (check_wall(data) == 1)
+		// 	data->pos_player.x = data->pos_player.x;
+		// else 
+			data->pos_player.x += 1;
+			// player_move(data);
+	}	
 	else if (key == UP || key == W)
-		data->pos_player.y += -1;
+	{	
+		// if (check_wall(data) == 1)
+		// 	data->pos_player.y = data->pos_player.y;
+		// else 
+			data->pos_player.y += -1;
+			// player_move(data);
+	}	
 	else if (key == DOWN || key == S)
-		data->pos_player.y += 1;
+	{
+		// if (check_wall(data) == 1)
+		// 	data->pos_player.y = data->pos_player.y;
+		// else 
+			data->pos_player.y += 1;
+			// player_move(data);
+	}		
 	else if (key == ESC)
 		// quit_game(data);
 
@@ -103,19 +170,30 @@ void 	load_textures(t_data *data)
 	file_to_image(data, &(data->tex_background), BACKGROUND);
 	file_to_image(data, &(data->tex_exit), EXIT);
 }
-void 	data_init(t_data *data, int width, int height)
+
+void 	transparency(t_data *data)
 {
-	data->mlx_ptr = mlx_init();
-	load_textures(data);
 	get_image_transparency(&(data->tex_player));
 	get_image_transparency(&(data->tex_collectible));
 	get_image_transparency(&(data->tex_exit));
 	get_image_transparency(&(data->tex_wall));
 	get_image_transparency(&(data->tex_background));
+}
+
+void 	data_init(t_data *data, int width, int height)
+{
+	data->mlx_ptr = mlx_init();
+	load_textures(data);
+	transparency(data);
 	data->w_width = width * data->tex_player.t_width;
 	data->w_height = height * data->tex_player.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
 	get_coordinates(data);
+}
+
+void 	put_background()
+{
+	
 }
 
 int 	game_frame(void *param)
@@ -142,6 +220,7 @@ int 	game_frame(void *param)
 		}
 		y++;
 	}
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
 	y = 0;
 	while (y < data->height) // while (data->map_tab[y])
 	{	
@@ -170,7 +249,7 @@ int 	game_frame(void *param)
 	texture = &(data->tex_player);
 	my_mlx_sprite_put(data, data_addr, texture, data->pos_player.x * texture->t_width, data->pos_player.y * texture->t_height);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
-	// mlx_destroy_image(data->mlx_ptr, data->image);
+	mlx_destroy_image(data->mlx_ptr, data->image);
 	data->image = NULL;
 	return (0);
 }
