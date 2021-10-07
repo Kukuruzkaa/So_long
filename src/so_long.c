@@ -35,15 +35,17 @@ void 	pmoves(t_data *data)
 int	deal_key(int key, void *param)
 {
 	t_data *data = (t_data *)param;
-	printf("key %d\n", key);
+	// printf("key %d\n", key);
 	if (key == LEFT || key == A)
 	{	
 		data->pos_player.x += -1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
 			data->pos_player.x += 1;
 		pmoves(data);
+		printf ("Move left : %d\n", data->movement);
+		data->movement++;
 	}
-	else if (key == RIGHT || key == D)
+	if (key == RIGHT || key == D)
 	{	
 		data->pos_player.x += 1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
@@ -77,12 +79,12 @@ int	deal_key(int key, void *param)
 		data->pos_player.y = 0;
 	if (data->pos_player.y > data->height - 1)
 		data->pos_player.y = data->height - 1;
-	if (data->pos_player.y < 0)∆˙zs
+	if (data->pos_player.y < 0)
 		data->pos_player.y = 0;
 	return (0);
 }
 
-void my_mlx_sprite_put (t_data *data, void *dest, t_texture *texture, int x, int y)
+void my_mlx_sprite_put(t_data *data, void *dest, t_texture *texture, int x, int y)
 {
     int i;
     int start;
@@ -162,6 +164,7 @@ void 	data_init(t_data *data, int width, int height)
 	data->w_height = height * data->tex_player.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
 	get_coordinates(data);
+	data->movement = 0;
 }
 
 // void 	put_background(t_data *data)
@@ -273,14 +276,8 @@ int		main(int argc, char **argv)
 
 	data_init(data, data->width, data->height);
 	mlx_key_hook(data->win_ptr, &deal_key, data);
-	mlx_hook(data->win_ptr, 0, 1L << 17, quit_game, data);
+	mlx_hook(data->win_ptr, 17, 0, quit_game, data);
 	mlx_loop_hook(data->mlx_ptr, &game_frame, data);
 	mlx_loop(data->mlx_ptr);
-
-	
-	
-	
-	
-	
 	return (0);
 }

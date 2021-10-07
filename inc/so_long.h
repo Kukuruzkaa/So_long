@@ -57,6 +57,7 @@ typedef struct s_data {
     int     w_width;
     int     w_height;
     int     index;
+    int     movement;
     t_texture tex_player;
     t_texture tex_wall;
     t_texture tex_background;
