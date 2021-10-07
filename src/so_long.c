@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void 	player_move(t_data *data)
+void 	pmoves(t_data *data)
 {
 	int y;
 	int x;
@@ -28,10 +28,8 @@ void 	player_move(t_data *data)
 			data->map_tab[data->pos_player.y][data->pos_player.x] = '0';
 		}
 	}
-	// if (data->map_tab[y][x] == 'E')
-	// {
-	// 	quit_game(data);
-	// }
+	if (data->map_tab[y][x] == 'E')
+		quit_game(data);
 }
 
 int	deal_key(int key, void *param)
@@ -43,31 +41,31 @@ int	deal_key(int key, void *param)
 		data->pos_player.x += -1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
 			data->pos_player.x += 1;
-		player_move(data);
+		pmoves(data);
 	}
 	else if (key == RIGHT || key == D)
 	{	
 		data->pos_player.x += 1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
 			data->pos_player.x += -1;
-		player_move(data);
+		pmoves(data);
 	}	
 	else if (key == UP || key == W)
 	{	
 		data->pos_player.y += -1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
 			data->pos_player.y += 1;
-		player_move(data);
+		pmoves(data);
 	}	
 	else if (key == DOWN || key == S)
 	{
 		data->pos_player.y += 1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
 			data->pos_player.y += -1;
-		player_move(data);
+		pmoves(data);
 	}		
 	else if (key == ESC)
-		// quit_game(data);
+		quit_game(data);
 
 	if (data->width - 1 < 0)
 		data->pos_player.x = 0;
@@ -79,7 +77,7 @@ int	deal_key(int key, void *param)
 		data->pos_player.y = 0;
 	if (data->pos_player.y > data->height - 1)
 		data->pos_player.y = data->height - 1;
-	if (data->pos_player.y < 0)
+	if (data->pos_player.y < 0)∆˙zs
 		data->pos_player.y = 0;
 	return (0);
 }
@@ -181,6 +179,7 @@ int 	game_frame(void *param)
 	int y;
 	void *data_addr;
 
+	data->index = 0;
 	data->image = mlx_new_image(data->mlx_ptr, data->w_width, data->w_height);
 	data_addr = mlx_get_data_addr(data->image, &bp, &bp, &bp);
 	y = 0;
@@ -226,6 +225,7 @@ int 	game_frame(void *param)
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
 	mlx_destroy_image(data->mlx_ptr, data->image);
 	data->image = NULL;
+	data->index = 1;
 	return (0);
 }
 
@@ -233,17 +233,10 @@ int	quit_game(void *param)
 {
 	t_data *data = (t_data *)param;
 
-	mlx_destroy_image(data->mlx_ptr, &data->tex_player);
-	mlx_destroy_image(data->mlx_ptr, &data->tex_collectible);
-	mlx_destroy_image(data->mlx_ptr, &data->tex_exit);
-	mlx_destroy_image(data->mlx_ptr, &data->tex_wall);
-	mlx_destroy_image(data->mlx_ptr, &data->tex_background);
+	if (data->index == 0)
+		mlx_destroy_image(data->mlx_ptr, data->image);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_image(data->mlx_ptr, data->image);
-	// mlx_destroy_display(data->mlx_ptr);
-	// mlx_loop_end(data->mlx_ptr);
-	free(data->mlx_ptr);
-	return 0;
+	exit (0);
 }
 
 int		main(int argc, char **argv)
@@ -280,10 +273,10 @@ int		main(int argc, char **argv)
 
 	data_init(data, data->width, data->height);
 	mlx_key_hook(data->win_ptr, &deal_key, data);
-	// mlx_hook(data->win_ptr, 33, 1L << 17, quit_game, data);
+	mlx_hook(data->win_ptr, 0, 1L << 17, quit_game, data);
 	mlx_loop_hook(data->mlx_ptr, &game_frame, data);
 	mlx_loop(data->mlx_ptr);
-	// my_mlx_pixel_put(texture, 5, 5, 0x00FF0000);
+
 	
 	
 	

@@ -16,8 +16,8 @@
 # define WALL "Volna.xpm"
 # define BACKGROUND "Fon.xpm" 
 
-# define WINDOW_SIZE_X 10
-# define WINDOW_SIZE_Y 8
+# define WINDOW_SIZE_X 16
+# define WINDOW_SIZE_Y 14
 
 # define UP 126
 # define DOWN 125
@@ -56,6 +56,7 @@ typedef struct s_data {
     void    *image;
     int     w_width;
     int     w_height;
+    int     index;
     t_texture tex_player;
     t_texture tex_wall;
     t_texture tex_background;
