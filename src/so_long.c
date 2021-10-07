@@ -12,26 +12,6 @@
 
 #include "so_long.h"
 
-int 	check_wall(t_data *data)
-{
-	int y;
-	int x;
-
-	y = data->pos_player.y;
-	x = data->pos_player.x;
-
-	if (data->map_tab[y][x - 1] == '1' || data->map_tab[y][x + 1] == '1' || data->map_tab[y - 1][x] == '1' || data->map_tab[y + 1][x] == '1')
-		return (1);
-	// else if (data->map_tab[y][x + 1] == '1')
-	// 	return (1);
-	// else if (data->map_tab[y - 1][x] == '1')
-	// 	return (1);
-	// else if (data->map_tab[y + 1][x] == '1')
-	// 	return (1);
-	return (0);
-}
-
-
 void 	player_move(t_data *data)
 {
 	int y;
@@ -44,15 +24,14 @@ void 	player_move(t_data *data)
 	{
 		if (data->map_tab[y][x] == 'C')
 		{
-			mlx_destroy_image(data->mlx_ptr, &data->tex_collectible);
 			data->map_tab[y][x] ='P';
 			data->map_tab[data->pos_player.y][data->pos_player.x] = '0';
 		}
 	}
-	if (data->map_tab[y][x] == 'E')
-	{
-		quit_game(data);
-	}
+	// if (data->map_tab[y][x] == 'E')
+	// {
+	// 	quit_game(data);
+	// }
 }
 
 int	deal_key(int key, void *param)
@@ -61,35 +40,31 @@ int	deal_key(int key, void *param)
 	printf("key %d\n", key);
 	if (key == LEFT || key == A)
 	{	
-		// if (check_wall(data) == 1)
-		// 	data->pos_player.x = data->pos_player.x;
-		// else 
-			data->pos_player.x += -1;
-			// player_move(data);
+		data->pos_player.x += -1;
+		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
+			data->pos_player.x += 1;
+		player_move(data);
 	}
 	else if (key == RIGHT || key == D)
 	{	
-		// if (check_wall(data) == 1)
-		// 	data->pos_player.x = data->pos_player.x;
-		// else 
-			data->pos_player.x += 1;
-			// player_move(data);
+		data->pos_player.x += 1;
+		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
+			data->pos_player.x += -1;
+		player_move(data);
 	}	
 	else if (key == UP || key == W)
 	{	
-		// if (check_wall(data) == 1)
-		// 	data->pos_player.y = data->pos_player.y;
-		// else 
-			data->pos_player.y += -1;
-			// player_move(data);
+		data->pos_player.y += -1;
+		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
+			data->pos_player.y += 1;
+		player_move(data);
 	}	
 	else if (key == DOWN || key == S)
 	{
-		// if (check_wall(data) == 1)
-		// 	data->pos_player.y = data->pos_player.y;
-		// else 
-			data->pos_player.y += 1;
-			// player_move(data);
+		data->pos_player.y += 1;
+		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
+			data->pos_player.y += -1;
+		player_move(data);
 	}		
 	else if (key == ESC)
 		// quit_game(data);
@@ -191,10 +166,10 @@ void 	data_init(t_data *data, int width, int height)
 	get_coordinates(data);
 }
 
-void 	put_background()
-{
-	
-}
+// void 	put_background(t_data *data)
+// {
+
+// }
 
 int 	game_frame(void *param)
 {
