@@ -66,10 +66,10 @@ char    **ft_fill_map(t_data **data, t_list *lst)
     {
         (*data)->map_tab[i] = ft_strdup(lst->content);
         i++;
-        lst = lst->next; 
+        lst = lst->next;
     }
     (*data)->map_tab[i] = NULL;
-    ft_lstclear(tmp, NULL);
+    ft_listclear(tmp);
     return ((*data)->map_tab);
 }
 
@@ -92,5 +92,6 @@ void  ft_read_map(char *file, t_data *data)
            ft_lstadd_back(&map, ft_lstnew(ft_strdup(line)));
     }
     ft_fill_map(&data, map);
+    ft_listclear(&map);
     close (fd);
 }

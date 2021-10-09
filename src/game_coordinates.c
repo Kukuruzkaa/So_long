@@ -33,3 +33,28 @@ void	get_coordinates(t_data *data)
 		y++;
 	}
 }
+
+void	lstdelone(t_list **list)
+{
+	if (*list)
+	{
+		free((*list)->content);
+		free(*list);
+		*list = NULL;
+	}
+}
+
+void	ft_listclear(t_list **list)
+{
+	t_list	*t;
+
+	if (!*list)
+		return ;
+	while (*list)
+	{
+		t = (*list)->next;
+		lstdelone(list);
+		*list = t;
+	}
+	*list = NULL;
+}

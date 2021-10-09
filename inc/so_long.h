@@ -1,7 +1,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "../minilibx-macos/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
@@ -19,15 +19,15 @@
 # define WINDOW_SIZE_X 16
 # define WINDOW_SIZE_Y 14
 
-# define UP 126
-# define DOWN 125
-# define LEFT 123
-# define RIGHT 124
-# define W 13
-# define S 1
-# define A 0
-# define D 2
-# define ESC 53
+# define UP 65362
+# define DOWN 65364
+# define LEFT 65361
+# define RIGHT 65363
+# define W 119
+# define S 115
+# define A 97
+# define D 100
+# define ESC 65307
 
 typedef struct s_texture {
 
@@ -85,6 +85,6 @@ int 	ft_is_possible_character(char *line);
 void 	ft_cep(t_data *data, int c, int e, int p);
 void	get_coordinates(t_data *data);
 int	    quit_game(void *param);
-
+void	ft_listclear(t_list **list);
 
 #endif

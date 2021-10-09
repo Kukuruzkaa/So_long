@@ -175,7 +175,7 @@ void 	data_init(t_data *data, int width, int height)
 	data->w_height = height * data->tex_player.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
 	get_coordinates(data);
-	data->movement = 0;
+	data->movement = 1;
 }
 
 // void 	put_background(t_data *data)
