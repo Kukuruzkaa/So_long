@@ -26,9 +26,10 @@ void 	pmoves(t_data *data)
 		{
 			data->map_tab[y][x] ='P';
 			data->map_tab[data->pos_player.y][data->pos_player.x] = '0';
+			data->collectible--;
 		}
 	}
-	if (data->map_tab[y][x] == 'E')
+	if (data->map_tab[y][x] == 'E' && data->collectible == 0)
 		quit_game(data);
 }
 
@@ -39,7 +40,8 @@ int	deal_key(int key, void *param)
 	if (key == LEFT || key == A)
 	{	
 		data->pos_player.x += -1;
-		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
+		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1' 
+		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
 			data->pos_player.x += 1;
 		pmoves(data);
 		printf ("Move left : %d\n", data->movement);
@@ -48,23 +50,32 @@ int	deal_key(int key, void *param)
 	if (key == RIGHT || key == D)
 	{	
 		data->pos_player.x += 1;
-		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
+		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
+		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
 			data->pos_player.x += -1;
 		pmoves(data);
+		printf ("Move right : %d\n", data->movement);
+		data->movement++;
 	}	
 	else if (key == UP || key == W)
 	{	
 		data->pos_player.y += -1;
-		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
+		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
+		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
 			data->pos_player.y += 1;
 		pmoves(data);
+		printf ("Move up : %d\n", data->movement);
+		data->movement++;
 	}	
 	else if (key == DOWN || key == S)
 	{
 		data->pos_player.y += 1;
-		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1')
+		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
+		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
 			data->pos_player.y += -1;
 		pmoves(data);
+		printf ("Move down : %d\n", data->movement);
+		data->movement++;
 	}		
 	else if (key == ESC)
 		quit_game(data);

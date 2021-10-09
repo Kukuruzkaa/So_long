@@ -12,18 +12,13 @@
 
 #include "so_long.h"
 
-void 	ft_cep(t_data *data)
+void 	ft_cep(t_data *data, int c, int e, int p)
 {
 	int i;
 	int j;
-	int c;
-	int e;
-	int p;
 
-	c = 0;
-	e = 0;
-	p = 0;
 	i = 0;
+	data->collectible = 0;
 	while (data->map_tab[i])
 	{
 		j = 0;
@@ -39,6 +34,7 @@ void 	ft_cep(t_data *data)
 		}
 		i++;
 	}
+	data->collectible = c;
 	if ( c < 1 || e < 1 || p < 1)
 		ft_putstr_fd("Error : not valid map => not enough game elements\n", 2);
 }
@@ -65,6 +61,6 @@ void 	ft_full_map_error_check(int fd, t_data *data)
 			ft_putstr_fd("Error : not valid map => not allowed character\n", 2);
 		i++;
 	}
-	ft_cep(data);
+	ft_cep(data, 0, 0, 0);
 }
 

@@ -1,7 +1,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "mlx.h"
+# include "../minilibx-macos/mlx.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
@@ -58,6 +58,7 @@ typedef struct s_data {
     int     w_height;
     int     index;
     int     movement;
+    int     collectible;
     t_texture tex_player;
     t_texture tex_wall;
     t_texture tex_background;
@@ -81,7 +82,7 @@ int	    ft_is_same_length(t_data *data);
 int     ft_is_ones_only(char *line);
 int     ft_is_one_ended(char *line);
 int 	ft_is_possible_character(char *line);
-void 	ft_cep(t_data *data);
+void 	ft_cep(t_data *data, int c, int e, int p);
 void	get_coordinates(t_data *data);
 int	    quit_game(void *param);
 
