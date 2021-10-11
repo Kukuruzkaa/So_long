@@ -59,16 +59,19 @@ char    **ft_fill_map(t_data **data, t_list *lst)
     tmp = NULL;
     tmp = &lst;
     tab_size = ft_lstsize(lst);
+    printf("%d\n", tab_size);
     (*data)->map_tab = ft_calloc(sizeof(char *), (tab_size + 1));
     if (!(*data)->map_tab)
         return (NULL);
     while (lst)
     {
+        printf("lst:[%s]\n", lst->content);
         (*data)->map_tab[i] = ft_strdup(lst->content);
         i++;
         lst = lst->next;
     }
     (*data)->map_tab[i] = NULL;
+    printf("%d\n, %s\n", i, (*data)->map_tab[i]);
     ft_listclear(tmp);
     return ((*data)->map_tab);
 }
@@ -89,9 +92,32 @@ void  ft_read_map(char *file, t_data *data)
     while ((ret = get_next_line(fd, &line) == 1))
     {
        if (line != NULL && ft_strlen(line) > 0)
+       {
            ft_lstadd_back(&map, ft_lstnew(ft_strdup(line)));
+           if (line)
+            {
+                free(line);
+                line = NULL;
+            }
+       }
+    }
+    if (ret == 0)
+    {
+       ft_lstadd_back(&map, ft_lstnew(ft_strdup(line)));
+    }
+    t_list *tmp;
+    tmp = map;
+    while (tmp)
+    {
+        printf("tmp:[%s]\n", tmp->content);
+        tmp= tmp->next;
     }
     ft_fill_map(&data, map);
     ft_listclear(&map);
+    if (line)
+    {
+        free(line);
+        line = NULL;
+    }
     close (fd);
 }

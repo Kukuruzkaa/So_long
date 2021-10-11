@@ -58,3 +58,18 @@ void	ft_listclear(t_list **list)
 	}
 	*list = NULL;
 }
+
+void	ft_freetab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	printf("%d\n", i);
+	free(tab[i]);
+	free(tab);
+}

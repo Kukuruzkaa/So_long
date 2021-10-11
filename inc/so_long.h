@@ -86,5 +86,7 @@ void 	ft_cep(t_data *data, int c, int e, int p);
 void	get_coordinates(t_data *data);
 int	    quit_game(void *param);
 void	ft_listclear(t_list **list);
+void	lstdelone(t_list **list);
+void	ft_freetab(char **tab);
 
 #endif
