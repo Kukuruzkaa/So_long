@@ -40,7 +40,7 @@ RM 				= rm -rf
 
 CC 				= clang
 CFLAGS 			= -Wall -Werror -Wextra -g -c 
-# FSAN			= -g3 -fsanitize=address
+#FSAN			= -g3 -fsanitize=address
 SRCDIR 			= src
 OBJDIR 			= objs
 

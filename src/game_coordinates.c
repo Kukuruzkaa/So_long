@@ -69,7 +69,7 @@ void	ft_freetab(char **tab)
 		free(tab[i]);
 		i++;
 	}
-	printf("%d\n", i);
 	free(tab[i]);
+	free(tab[i++]);
 	free(tab);
 }
