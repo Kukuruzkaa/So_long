@@ -66,11 +66,10 @@ void	ft_freetab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("freeing i = %d\n",i);
 		free(tab[i]);
 		i++;
 	}
-	//free(tab[i]);
-	//free(tab[i++]);
 	free(tab);
 }
+
+

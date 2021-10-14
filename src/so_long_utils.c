@@ -37,23 +37,6 @@ int     ft_get_height(t_data *data)
     return (height);
 }
 
-// int     ft_get_height(char *file)
-// {
-//     char *line;
-//     int height;
-//     int fd;
-
-//     height = 0;
-//     fd = open(file, O_RDONLY, 0);
-//     while (get_next_line(fd, &line))
-//     {
-//         height++;
-//         free(line);
-//     }
-//     close (fd);
-//     return (height);
-// }
-
 int     ft_get_width(t_data *data)
 {
     int width;
@@ -76,33 +59,19 @@ char    **ft_fill_map(t_data **data, t_list *lst)
     tmp = NULL;
     tmp = &lst;
     tab_size = ft_lstsize(lst);
-    printf("tab_size = %d\n", tab_size);
-
     (*data)->map_tab = ft_calloc(sizeof(char *), tab_size + 1);
     if (!(*data)->map_tab)
         return (NULL);
     while (lst)
     {
-        printf("lst:[%s]\n", lst->content);
-        printf("i = %d\n", i);
         (*data)->map_tab[i] = ft_strdup(lst->content);
-        printf("map[i] = %s\n", (*data)->map_tab[i]);
         i++;
         lst = lst->next;
     }
     (*data)->map_tab[tab_size] = NULL;
-    //printf("%d\n, %s\n", i, (*data)->map_tab[i]);
     ft_listclear(tmp);
     return ((*data)->map_tab);
 }
-
-// while (i < data->height)
-//         {
-//             data->map_tab[i] = ft_strdup(line);
-//             i++;
-//         }
-//         data->map_tab[i] = NULL;
-
 
 void  ft_read_map(char *file, t_data *data)
 {
@@ -110,13 +79,9 @@ void  ft_read_map(char *file, t_data *data)
     int fd;
     int ret;
     char *line;
-    // int i;
 
     map = NULL;
     line = NULL;
-    // i = 0;
-    // data->height = ft_get_height(file);
-    // data->map_tab = malloc(sizeof(char *) * (data->height + 1));
     fd = open(file, O_RDONLY, 0);
         if (fd < 0)
             return ;
@@ -142,13 +107,6 @@ void  ft_read_map(char *file, t_data *data)
             line = NULL;
         }
     }
-    // t_list *tmp;
-    // tmp = map;
-    // while (tmp)
-    // {
-    //     printf("tmp:[%s]\n", tmp->content);
-    //     tmp= tmp->next;
-    // }
     ft_fill_map(&data, map);
     ft_listclear(&map);
     close (fd);
