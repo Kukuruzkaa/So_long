@@ -29,11 +29,8 @@ void 	pmoves(t_data *data)
 			data->collectible--;
 		}
 	}
-	if (data->map_tab[y][x] == 'E' && data->collectible == 0)
-	{ 	
-		//ft_freetab(data->map_tab);
+	if (data->map_tab[y][x] == 'E' && data->collectible == 0)	
 		quit_game(data);
-	}
 }
 
 int	deal_key(int key, void *param)
@@ -190,7 +187,6 @@ int 	game_frame(void *param)
 {
 	t_data *data = (t_data *)param;
 	t_texture *texture = &(data->tex_player);
-
 	int bp;
 	int x;
 	int y;
@@ -253,21 +249,22 @@ int	quit_game(void *param)
 	ft_freetab(data->map_tab);
 	if (data->index == 0)
 		mlx_destroy_image(data->mlx_ptr, data->image);
-	mlx_loop_end(data->mlx_ptr);
+	mlx_destroy_image(data->mlx_ptr, data->tex_player.img);
+	mlx_destroy_image(data->mlx_ptr, data->tex_collectible.img);
+	mlx_destroy_image(data->mlx_ptr, data->tex_exit.img);
+	mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
+	mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
-	
-	
 	free(data->mlx_ptr);
+	free(data);
 	exit (0);
 }
 
 int		main(int argc, char **argv)
 {
 	t_data *data;
-	t_texture *texture;
-	t_coordinates *coordinates;
 	int i;
 	int fd;
 
@@ -276,9 +273,7 @@ int		main(int argc, char **argv)
 
 	(void) argc;
  	data = (t_data*)malloc(sizeof(t_data));
-	texture = (t_texture*)malloc(sizeof(t_texture));
-	coordinates = (t_coordinates*)malloc(sizeof(t_coordinates));
-
+	
 	ft_read_map(argv[1], data);
 	fd = open(argv[1], O_RDONLY, 0);
 	data->height = ft_get_height(data);

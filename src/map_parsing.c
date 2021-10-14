@@ -51,16 +51,18 @@ void 	ft_full_map_error_check(int fd, t_data *data)
 
 	i = 0;
 	j = data->height - 1;
-	if (get_next_line(fd, data->map_tab) == -1)
-	{
-		ft_putstr_fd("Error : not valid map => not valid file\n", 2);
-		ft_freetab(data->map_tab);
-		exit (0);
-	}
-	else if (ft_is_rectangular(data) == 0 || ft_is_same_length(data) == 0)
+	(void) fd;
+	// if (get_next_line(fd, data->map_tab) == -1)
+	// {
+	// 	ft_putstr_fd("Error : not valid map => not valid file\n", 2);
+	// 	ft_freetab(data->map_tab);
+	// 	exit (0);
+	// }
+	if (ft_is_rectangular(data) == 0 || ft_is_same_length(data) == 0)
 	{
 		ft_putstr_fd("Error : not valid map => not rectangular\n", 2);
 		ft_freetab(data->map_tab);
+		free(data);
 		exit (0);
 	}
 	else if (ft_is_ones_only(data->map_tab[i]) == 0 || ft_is_ones_only(data->map_tab[j]) == 0)
@@ -75,12 +77,14 @@ void 	ft_full_map_error_check(int fd, t_data *data)
 		{
 			ft_putstr_fd("Error : not valid map => not closed wall\n", 2);
 			ft_freetab(data->map_tab);
+			free(data);
 			exit (0);
 		}
 		if (ft_is_possible_character(data->map_tab[i]) == 0)
 		{
 			ft_putstr_fd("Error : not valid map => not allowed character\n", 2);
 			ft_freetab(data->map_tab);
+			free(data);
 			exit (0);
 		}
 		i++;
