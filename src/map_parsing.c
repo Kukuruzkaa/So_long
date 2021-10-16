@@ -43,7 +43,8 @@ void 	ft_cep(t_data *data, int c, int e, int p)
 	}
 }
 
-void 	ft_full_map_error_check(int fd, t_data *data)
+
+void 	ft_full_map_error_check(t_data *data)
 {
 
 	int i;
@@ -51,14 +52,7 @@ void 	ft_full_map_error_check(int fd, t_data *data)
 
 	i = 0;
 	j = data->height - 1;
-	(void) fd;
-	// if (get_next_line(fd, data->map_tab[i]) == -1)
-	// {
-	// 	ft_putstr_fd("Error : not valid map => not valid file\n", 2);
-	// 	ft_freetab(data->map_tab);
-	// 	free(data);
-	// 	exit (0);
-	// }
+
 	if (ft_is_rectangular(data) == 0 || ft_is_same_length(data) == 0)
 	{
 		ft_putstr_fd("Error : not valid map => not rectangular\n", 2);
@@ -70,6 +64,7 @@ void 	ft_full_map_error_check(int fd, t_data *data)
 	{
 		ft_putstr_fd("Error : not valid map => not closed map\n", 2);
 		ft_freetab(data->map_tab);
+		free(data);
 		exit (0);
 	}
 	while (data->map_tab[i])
@@ -93,3 +88,36 @@ void 	ft_full_map_error_check(int fd, t_data *data)
 	ft_cep(data, 0, 0, 0);
 }
 
+// void	draw_img_at_pos(t_app *app, t_texture *txr, int x, int y)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	st;
+// 	int	bpp;
+
+// 	i = 0;
+// 	bpp = txr->bpp / 8;
+// 	st = bpp * (x + y * app->x);
+	
+// 	while (i < txr->sp_y)
+// 	{
+// 		j = 0;
+// 		while (j < txr->sp_y)
+// 		{
+// 			if ((txr->addr[i * txr->size + j * bpp + 0] != 0)
+// 				&& (txr->addr[i * txr->size + j * bpp + 1] != 0)
+// 				&& (txr->addr[i * txr->size + j * bpp + 2] != 0)
+// 				&& (txr->addr[i * txr->size + j * bpp + 3] != -1))
+// 			{
+// 				ft_memcpy(app->image_addr + st + i * app->x * bpp + j * bpp,
+// 			txr->addr + bpp * txr->sp_x * i + j * bpp, 0);
+// 				ft_memcpy(app->image_addr + st + i * app->x * bpp + j * bpp,
+// 			txr->addr + bpp * txr->sp_x * i + j * bpp, 1);
+// 				ft_memcpy(app->image_addr + st + i * app->x * bpp + j * bpp,
+// 			txr->addr + bpp * txr->sp_x * i + j * bpp, 2);
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }

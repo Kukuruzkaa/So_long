@@ -73,6 +73,40 @@ char    **ft_fill_map(t_data **data, t_list *lst)
     return ((*data)->map_tab);
 }
 
+int 	ft_check_extention(char *file)
+{
+	char *str;
+    int l;
+
+    str = file;
+    l = ft_strlen(str);
+    if (l < 5)
+        return (1);
+    if (str[l - 1] == 'r' && str[l - 2] == 'e' 
+        && str[l - 3] == 'b' && str[l - 4] == '.')
+    {
+        if (str[l - 5] == '.' || str[l - 5] == '/')
+            return (1);
+    }
+    return (0);
+}
+
+int   ft_check_file(char *file)
+{
+    int fd;
+
+    fd = open(file, __O_DIRECTORY);
+    if (fd > 0)
+    {
+       ft_putstr_fd("Error : not valid file => DIRECTORY\n", 2); 
+       close (fd);
+       exit(0);
+    }
+    else 
+        fd = open(file, O_RDONLY, 0);
+    return (fd);
+}
+
 void  ft_read_map(char *file, t_data *data)
 {
     t_list *map;
@@ -82,9 +116,17 @@ void  ft_read_map(char *file, t_data *data)
 
     map = NULL;
     line = NULL;
-    fd = open(file, O_RDONLY, 0);
-        if (fd < 0)
-            return ;
+    // if (ft_check_extention(file) == 0)
+    // {
+    //     ft_putstr_fd("Error : not valid file extention\n", 2);
+    //     exit(0);
+    // }
+    fd = ft_check_file(file);
+    if (fd < 0)
+    {
+        ft_putstr_fd("Error : file does not exist\n", 2);
+        exit(0);
+    }
     while ((ret = get_next_line(fd, &line) == 1))
     {
        if (line != NULL && ft_strlen(line) > 0)
@@ -100,7 +142,6 @@ void  ft_read_map(char *file, t_data *data)
     if (ret == 0)
     {
        ft_lstadd_back(&map, ft_lstnew(ft_strdup(line)));
-       printf("%s\n", line);
        if (line)
         {
             free(line);

@@ -74,7 +74,7 @@ typedef struct s_data {
 
 
 void    ft_read_map(char *file, t_data *data);
-void 	ft_full_map_error_check(int fd, t_data *data);
+void 	ft_full_map_error_check(t_data *data);
 int     ft_get_height(t_data *data);
 int     ft_get_width(t_data *data);
 int 	ft_is_rectangular(t_data *data);
