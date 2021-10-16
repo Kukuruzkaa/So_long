@@ -17,7 +17,7 @@
 # define BACKGROUND "Fon.xpm" 
 
 # define WINDOW_SIZE_X 16
-# define WINDOW_SIZE_Y 14
+# define WINDOW_SIZE_Y 16
 
 # define UP 65362
 # define DOWN 65364
@@ -54,6 +54,7 @@ typedef struct s_data {
 	void    *mlx_ptr;
 	void    *win_ptr;
     void    *image;
+    void    *addr;
     int     w_width;
     int     w_height;
     int     index;
@@ -88,5 +89,6 @@ int	    quit_game(void *param);
 void	ft_listclear(t_list **list);
 void	lstdelone(t_list **list);
 void	ft_freetab(char **tab);
+int	deal_key(int key, void *param);
 
 #endif
