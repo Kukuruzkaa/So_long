@@ -90,5 +90,7 @@ void	ft_listclear(t_list **list);
 void	lstdelone(t_list **list);
 void	ft_freetab(char **tab);
 int	deal_key(int key, void *param);
+void	ft_free_data_and_exit(t_data *data);
+void    ft_error_output(t_data *data, int err);
 
 #endif

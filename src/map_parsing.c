@@ -17,9 +17,9 @@ void 	ft_cep(t_data *data, int c, int e, int p)
 	int i;
 	int j;
 
-	i = 0;
+	i = -1;
 	data->collectible = 0;
-	while (data->map_tab[i])
+	while (data->map_tab[++i])
 	{
 		j = 0;
 		while (j < data->width)
@@ -32,17 +32,18 @@ void 	ft_cep(t_data *data, int c, int e, int p)
 				p++;
 			j++;
 		}
-		i++;
 	}
 	data->collectible = c;
 	if ( c < 1 || e < 1 || p < 1)
-	{
-		ft_putstr_fd("Error : not valid map => not enough game elements\n", 2);
-		ft_freetab(data->map_tab);
-		exit (0);
-	}
+		ft_error_output(data, 5);
 }
 
+void	ft_free_data_and_exit(t_data *data)
+{
+	ft_freetab(data->map_tab);
+	free(data);
+	exit (0);
+}
 
 void 	ft_full_map_error_check(t_data *data)
 {
@@ -54,35 +55,15 @@ void 	ft_full_map_error_check(t_data *data)
 	j = data->height - 1;
 
 	if (ft_is_rectangular(data) == 0 || ft_is_same_length(data) == 0)
-	{
-		ft_putstr_fd("Error : not valid map => not rectangular\n", 2);
-		ft_freetab(data->map_tab);
-		free(data);
-		exit (0);
-	}
+		ft_error_output(data, 1);
 	else if (ft_is_ones_only(data->map_tab[i]) == 0 || ft_is_ones_only(data->map_tab[j]) == 0)
-	{
-		ft_putstr_fd("Error : not valid map => not closed map\n", 2);
-		ft_freetab(data->map_tab);
-		free(data);
-		exit (0);
-	}
+		ft_error_output(data, 2);
 	while (data->map_tab[i])
 	{
 		if (ft_is_one_ended(data->map_tab[i]) == 0 && i != j)
-		{
-			ft_putstr_fd("Error : not valid map => not closed wall\n", 2);
-			ft_freetab(data->map_tab);
-			free(data);
-			exit (0);
-		}
+			ft_error_output(data, 3);
 		if (ft_is_possible_character(data->map_tab[i]) == 0)
-		{
-			ft_putstr_fd("Error : not valid map => not allowed character\n", 2);
-			ft_freetab(data->map_tab);
-			free(data);
-			exit (0);
-		}
+			ft_error_output(data, 4);
 		i++;
 	}
 	ft_cep(data, 0, 0, 0);
