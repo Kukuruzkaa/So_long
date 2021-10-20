@@ -2,7 +2,7 @@
 static char *_5a3e1ca7c444ba6f9cbe509a3e00d15IGqSQX5Oyks5sumV[] = {
 /* columns rows colors chars-per-pixel */
 "60 60 230 2 ",
-"   c None",
+"   c #000000",
 ".  c #070709",
 "X  c #0A0A0C",
 "o  c #070606",
