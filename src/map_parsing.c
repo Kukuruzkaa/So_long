@@ -68,37 +68,3 @@ void 	ft_full_map_error_check(t_data *data)
 	}
 	ft_cep(data, 0, 0, 0);
 }
-
-// void	draw_img_at_pos(t_app *app, t_texture *txr, int x, int y)
-// {
-// 	int	i;
-// 	int	j;
-// 	int	st;
-// 	int	bpp;
-
-// 	i = 0;
-// 	bpp = txr->bpp / 8;
-// 	st = bpp * (x + y * app->x);
-	
-// 	while (i < txr->sp_y)
-// 	{
-// 		j = 0;
-// 		while (j < txr->sp_y)
-// 		{
-// 			if ((txr->addr[i * txr->size + j * bpp + 0] != 0)
-// 				&& (txr->addr[i * txr->size + j * bpp + 1] != 0)
-// 				&& (txr->addr[i * txr->size + j * bpp + 2] != 0)
-// 				&& (txr->addr[i * txr->size + j * bpp + 3] != -1))
-// 			{
-// 				ft_memcpy(app->image_addr + st + i * app->x * bpp + j * bpp,
-// 			txr->addr + bpp * txr->sp_x * i + j * bpp, 0);
-// 				ft_memcpy(app->image_addr + st + i * app->x * bpp + j * bpp,
-// 			txr->addr + bpp * txr->sp_x * i + j * bpp, 1);
-// 				ft_memcpy(app->image_addr + st + i * app->x * bpp + j * bpp,
-// 			txr->addr + bpp * txr->sp_x * i + j * bpp, 2);
-// 			}
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }

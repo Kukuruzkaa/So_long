@@ -79,7 +79,6 @@ int 	game_frame(void *param)
 {
 	t_data *data = (t_data *)param;
 	t_texture *texture = &(data->tex_player);
-	// void *data_addr;
 	int bp;
 	int x;
 	int y;
@@ -90,10 +89,10 @@ int 	game_frame(void *param)
 		return 0;
 	data->addr = mlx_get_data_addr(data->image, &bp, &bp, &bp);
 	y = 0;
-	while (y < data->height) // while (data->map_tab[y])
+	while (y < data->height)
 	{	
 		x = 0;
-		while (x < data->width) // while (data->map_tab[x])
+		while (x < data->width)
 		{
 			texture = &(data->tex_background);
 			my_mlx_sprite_put(data, texture, x * texture->t_width, y * texture->t_height);
@@ -103,10 +102,10 @@ int 	game_frame(void *param)
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
 	y = 0;
-	while (y < data->height) // while (data->map_tab[y])
+	while (y < data->height)
 	{	
 		x = 0;
-		while (x < data->width) // while (data->map_tab[x])
+		while (x < data->width)
 		{
 			if (data->map_tab[y][x] == 'C')
 			{
@@ -176,14 +175,6 @@ int		main(int argc, char **argv)
 	close(fd);
 	
 	
-	while (data->map_tab[i] != NULL)
-	{
-		for (int j = 0; j < data->width; j++)
-			printf ("%c", data->map_tab[i][j]);
-		printf("\n");
-		i++;
-	}
-
 	data_init(data, data->width, data->height);
 	mlx_key_hook(data->win_ptr, &deal_key, data);
 	mlx_hook(data->win_ptr, 17, 0, quit_game, data);

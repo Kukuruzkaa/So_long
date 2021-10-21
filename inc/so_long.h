@@ -11,10 +11,10 @@
 
 # define NAME "So_long"
 # define PLAYER "Wolf.xpm"
-# define COLLECTIBLE "Lapin.xpm"
-# define EXIT "Ship.xpm"
-# define WALL "Volna.xpm"
-# define BACKGROUND "Fon.xpm" 
+# define COLLECTIBLE "diamond.xpm"
+# define EXIT "cave.xpm"
+# define WALL "tree.xpm"
+# define BACKGROUND "ground.xpm" 
 
 # define WINDOW_SIZE_X 16
 # define WINDOW_SIZE_Y 16
