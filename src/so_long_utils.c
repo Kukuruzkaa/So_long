@@ -12,16 +12,6 @@
 
 #include "so_long.h"
 
-void    ft_init(t_data *data)
-{
-    data->width = 0;
-    data->height = 0;
-    data->map_tab = NULL;
-    
-	data->mlx_ptr = NULL;
-	data->win_ptr = NULL;
-}
-
 int     ft_get_height(t_data *data)
 {
     int height;
@@ -73,22 +63,33 @@ char    **ft_fill_map(t_data **data, t_list *lst)
     return ((*data)->map_tab);
 }
 
+int		ft_strcmp(char *s1, char *s2)
+{
+	int a;
+	
+	a = 0;
+	while ((s1[a] != '\0') && ( s2[a] != '\0'))
+	{
+		if (s1[a] ==  s2[a])
+			a++;
+		if (s1[a] > s2[a] || s1[a] < s2[a])
+			return (s1[a] - s2[a]);
+	}
+	return (0);
+}
+
 int 	ft_check_extention(char *file)
 {
-	char *str;
     int l;
 
-    str = file;
-    l = ft_strlen(str);
+    l = ft_strlen(file);
+    if (l == 0)
+        return (0);
     if (l < 5)
-        return (1);
-    if (str[l - 1] == 'r' && str[l - 2] == 'e' 
-        && str[l - 3] == 'b' && str[l - 4] == '.')
-    {
-        if (str[l - 5] == '.' || str[l - 5] == '/')
-            return (1);
-    }
-    return (0);
+        return (0);
+    if (ft_strcmp(file + l - 4, ".ber") != 0)
+        return (0);
+    return (1);
 }
 
 int   ft_check_file(char *file)
@@ -107,6 +108,17 @@ int   ft_check_file(char *file)
     return (fd);
 }
 
+
+void  ft_free_line(char *line)
+{
+    if (line)
+    {
+        free(line);
+        line = NULL;
+    }
+}
+
+
 void  ft_read_map(char *file, t_data *data)
 {
     t_list *map;
@@ -116,37 +128,20 @@ void  ft_read_map(char *file, t_data *data)
 
     map = NULL;
     line = NULL;
-    // if (ft_check_extention(file) == 0)
-    // {
-    //     ft_putstr_fd("Error : not valid file extention\n", 2);
-    //     exit(0);
-    // }
     fd = ft_check_file(file);
-    if (fd < 0)
-    {
-        ft_putstr_fd("Error : file does not exist\n", 2);
-        exit(0);
-    }
+    ft_file_error(fd, file);
     while ((ret = get_next_line(fd, &line) == 1))
     {
        if (line != NULL && ft_strlen(line) > 0)
        {
             ft_lstadd_back(&map, ft_lstnew(ft_strdup(line)));
-            if (line)
-            {
-                free(line);
-                line = NULL;
-            }
+            ft_free_line(line);
        }
     }
     if (ret == 0)
     {
        ft_lstadd_back(&map, ft_lstnew(ft_strdup(line)));
-       if (line)
-        {
-            free(line);
-            line = NULL;
-        }
+       ft_free_line(line);       
     }
     ft_fill_map(&data, map);
     ft_listclear(&map);

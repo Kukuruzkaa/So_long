@@ -24,9 +24,9 @@ void 	pmoves(t_data *data)
 int	deal_key(int key, void *param)
 {
 	t_data *data = (t_data *)param;
-	// printf("key %d\n", key);
 	if (key == LEFT || key == A)
 	{	
+		data->keycode = key;
 		data->pos_player.x += -1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1' 
 		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
@@ -40,6 +40,7 @@ int	deal_key(int key, void *param)
 	}
 	if (key == RIGHT || key == D)
 	{	
+		data->keycode = key;
 		data->pos_player.x += 1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
 		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
@@ -53,6 +54,7 @@ int	deal_key(int key, void *param)
 	}	
 	else if (key == UP || key == W)
 	{	
+		data->keycode = key;
 		data->pos_player.y += -1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
 		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
@@ -66,6 +68,7 @@ int	deal_key(int key, void *param)
 	}	
 	else if (key == DOWN || key == S)
 	{
+		data->keycode = key;
 		data->pos_player.y += 1;
 		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
 		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
@@ -94,3 +97,4 @@ int	deal_key(int key, void *param)
 		data->pos_player.y = 0;
 	return (0);
 }
+

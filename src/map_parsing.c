@@ -53,7 +53,7 @@ void 	ft_full_map_error_check(t_data *data)
 
 	i = 0;
 	j = data->height - 1;
-
+	
 	if (ft_is_rectangular(data) == 0 || ft_is_same_length(data) == 0)
 		ft_error_output(data, 1);
 	else if (ft_is_ones_only(data->map_tab[i]) == 0 || ft_is_ones_only(data->map_tab[j]) == 0)
@@ -68,3 +68,4 @@ void 	ft_full_map_error_check(t_data *data)
 	}
 	ft_cep(data, 0, 0, 0);
 }
+

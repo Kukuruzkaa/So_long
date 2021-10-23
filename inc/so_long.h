@@ -10,9 +10,12 @@
 # include "../Libft/libft.h"
 
 # define NAME "So_long"
-# define PLAYER "Wolf.xpm"
+# define D_PLAYER "down.xpm"
+# define U_PLAYER "up.xpm"
+# define L_PLAYER "left.xpm"
+# define R_PLAYER "right.xpm"
 # define COLLECTIBLE "diamond.xpm"
-# define EXIT "cave.xpm"
+# define EXIT "exit.xpm"
 # define WALL "tree.xpm"
 # define BACKGROUND "ground.xpm" 
 
@@ -60,7 +63,11 @@ typedef struct s_data {
     int     index;
     int     movement;
     int     collectible;
-    t_texture tex_player;
+    int     keycode;
+    t_texture tex_dplayer;
+    t_texture tex_uplayer;
+    t_texture tex_lplayer;
+    t_texture tex_rplayer;
     t_texture tex_wall;
     t_texture tex_background;
     t_texture tex_exit;
@@ -89,8 +96,14 @@ int	    quit_game(void *param);
 void	ft_listclear(t_list **list);
 void	lstdelone(t_list **list);
 void	ft_freetab(char **tab);
-int	deal_key(int key, void *param);
+int	    deal_key(int key, void *param);
 void	ft_free_data_and_exit(t_data *data);
 void    ft_error_output(t_data *data, int err);
+void	ft_draw_player(t_data *data, t_texture *texture);
+void	my_mlx_sprite_put(t_data *data, t_texture *texture, int x, int y);
+int 	game_frame(void *param);
+void    ft_file_error(int fd, char *file);
+int 	ft_check_extention(char *file);
+void 	data_init(t_data *data, int width, int height);
 
 #endif

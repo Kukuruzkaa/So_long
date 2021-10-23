@@ -52,7 +52,10 @@ void 	file_to_image(t_data *data, t_texture* texture, char *img)
 
 void 	load_textures(t_data *data)
 {
-	file_to_image(data, &(data->tex_player), PLAYER);
+	file_to_image(data, &(data->tex_dplayer), D_PLAYER);
+	file_to_image(data, &(data->tex_uplayer), U_PLAYER);
+	file_to_image(data, &(data->tex_lplayer), L_PLAYER);
+	file_to_image(data, &(data->tex_rplayer), R_PLAYER);
 	file_to_image(data, &(data->tex_collectible), COLLECTIBLE);
 	file_to_image(data, &(data->tex_wall), WALL);
 	file_to_image(data, &(data->tex_background), BACKGROUND);
@@ -63,31 +66,20 @@ void 	data_init(t_data *data, int width, int height)
 {
 	data->mlx_ptr = mlx_init();
 	load_textures(data);
-	data->w_width = width * data->tex_player.t_width;
-	data->w_height = height * data->tex_player.t_height;
+	data->w_width = width * data->tex_dplayer.t_width;
+	data->w_height = height * data->tex_dplayer.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width, data->w_height, NAME);
 	get_coordinates(data);
 	data->movement = 1;
+	data->keycode = 0;
 }
 
-// void 	put_background(t_data *data)
-// {
-
-// }
-
-int 	game_frame(void *param)
+void 	ft_draw_background(t_data *data)
 {
-	t_data *data = (t_data *)param;
-	t_texture *texture = &(data->tex_player);
-	int bp;
+	t_texture *texture = &(data->tex_dplayer);
 	int x;
 	int y;
 
-	data->index = 0;
-	data->image = mlx_new_image(data->mlx_ptr, data->w_width, data->w_height);
-	if (!data->image)
-		return 0;
-	data->addr = mlx_get_data_addr(data->image, &bp, &bp, &bp);
 	y = 0;
 	while (y < data->height)
 	{	
@@ -101,33 +93,73 @@ int 	game_frame(void *param)
 		y++;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
-	y = 0;
-	while (y < data->height)
+}
+
+void 	ft_draw_sprites(t_data *data)
+{
+	int x;
+	int y;
+
+	y = -1;
+	while (++y < data->height)
 	{	
-		x = 0;
-		while (x < data->width)
+		x = -1;
+		while (++x < data->width)
 		{
 			if (data->map_tab[y][x] == 'C')
-			{
-				texture = &(data->tex_collectible);
-				my_mlx_sprite_put(data, texture, x * texture->t_width, y * texture->t_height);
-			}
+				my_mlx_sprite_put(data, &(data->tex_collectible), x * data->tex_collectible.t_width, y * data->tex_collectible.t_height);
 			else if (data->map_tab[y][x] == 'E')
-			{
-				texture = &(data->tex_exit);
-				my_mlx_sprite_put(data, texture, x * texture->t_width, y * texture->t_height);
-			}
+				my_mlx_sprite_put(data, &(data->tex_exit), x * data->tex_exit.t_width, y * data->tex_exit.t_height);
 			else if (data->map_tab[y][x] == '1')
-			{
-				texture = &(data->tex_wall);
-				my_mlx_sprite_put(data, texture, x * texture->t_width, y * texture->t_height);
-			}
-			x++;
+				my_mlx_sprite_put(data, &(data->tex_wall), x * data->tex_wall.t_width, y * data->tex_wall.t_height);
 		}
-		y++;
 	}
-	texture = &(data->tex_player);
-	my_mlx_sprite_put(data, texture, data->pos_player.x * texture->t_width, data->pos_player.y * texture->t_height);
+}
+
+void	ft_draw_player(t_data *data, t_texture *texture)
+{
+	if (data->keycode == 0)
+	{
+		texture = &(data->tex_dplayer);
+		my_mlx_sprite_put(data, texture, data->pos_player.x * texture->t_width, data->pos_player.y * texture->t_height);
+	}
+	if (data->keycode == LEFT || data->keycode == A)
+	{
+		texture = &(data->tex_lplayer);
+		my_mlx_sprite_put(data, texture, data->pos_player.x * texture->t_width, data->pos_player.y * texture->t_height);
+	}
+	if (data->keycode == RIGHT || data->keycode == D)
+	{
+		texture = &(data->tex_rplayer);
+		my_mlx_sprite_put(data, texture, data->pos_player.x * texture->t_width, data->pos_player.y * texture->t_height);
+	}
+	if (data->keycode == UP || data->keycode == W)
+	{
+		texture = &(data->tex_uplayer);
+		my_mlx_sprite_put(data, texture, data->pos_player.x * texture->t_width, data->pos_player.y * texture->t_height);
+	}
+	if (data->keycode == DOWN || data->keycode == S)
+	{
+		texture = &(data->tex_dplayer);
+		my_mlx_sprite_put(data, texture, data->pos_player.x * texture->t_width, data->pos_player.y * texture->t_height);
+	}
+}
+
+int 	game_frame(void *param)
+{
+	t_data *data = (t_data *)param;
+	t_texture *texture = &(data->tex_dplayer);
+	int bp;
+
+	data->index = 0;
+	data->image = mlx_new_image(data->mlx_ptr, data->w_width, data->w_height);
+	if (!data->image)
+		return 0;
+	data->addr = mlx_get_data_addr(data->image, &bp, &bp, &bp);
+	ft_draw_background(data);
+	ft_draw_sprites(data);
+	texture = &(data->tex_dplayer);
+	ft_draw_player(data, texture);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
 	mlx_destroy_image(data->mlx_ptr, data->image);
 	data->image = NULL;
@@ -142,7 +174,10 @@ int	quit_game(void *param)
 	ft_freetab(data->map_tab);
 	if (data->index == 0)
 		mlx_destroy_image(data->mlx_ptr, data->image);
-	mlx_destroy_image(data->mlx_ptr, data->tex_player.img);
+	mlx_destroy_image(data->mlx_ptr, data->tex_dplayer.img);
+	mlx_destroy_image(data->mlx_ptr, data->tex_uplayer.img);
+	mlx_destroy_image(data->mlx_ptr, data->tex_lplayer.img);
+	mlx_destroy_image(data->mlx_ptr, data->tex_rplayer.img);
 	mlx_destroy_image(data->mlx_ptr, data->tex_collectible.img);
 	mlx_destroy_image(data->mlx_ptr, data->tex_exit.img);
 	mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
@@ -153,32 +188,4 @@ int	quit_game(void *param)
 	free(data->mlx_ptr);
 	free(data);
 	exit (0);
-}
-
-int		main(int argc, char **argv)
-{
-	t_data *data;
-	int i;
-	int fd;
-
-	fd = 0;
-	i = 0;
-
-	(void) argc;
- 	data = (t_data*)malloc(sizeof(t_data));
-	
-	ft_read_map(argv[1], data);
-	fd = open(argv[1], O_RDONLY, 0);
-	data->height = ft_get_height(data);
-	data->width = ft_get_width(data);
-	ft_full_map_error_check(data);
-	close(fd);
-	
-	
-	data_init(data, data->width, data->height);
-	mlx_key_hook(data->win_ptr, &deal_key, data);
-	mlx_hook(data->win_ptr, 17, 0, quit_game, data);
-	mlx_loop_hook(data->mlx_ptr, &game_frame, data);
-	mlx_loop(data->mlx_ptr);
-	return (0);
 }
