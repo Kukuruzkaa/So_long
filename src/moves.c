@@ -1,5 +1,21 @@
 #include "so_long.h"
 
+void 	check_pposition(t_data *data)
+{
+	if (data->width - 1 < 0)
+		data->pos_player.x = 0;
+	if (data->pos_player.x > data->width - 1)
+		data->pos_player.x = data->width - 1;
+	if (data->pos_player.x < 0)
+		data->pos_player.x = 0;
+	if (data->height - 1 < 0)
+		data->pos_player.y = 0;
+	if (data->pos_player.y > data->height - 1)
+		data->pos_player.y = data->height - 1;
+	if (data->pos_player.y < 0)
+		data->pos_player.y = 0;
+}
+
 void 	pmoves(t_data *data)
 {
 	int y;
@@ -21,80 +37,53 @@ void 	pmoves(t_data *data)
 		quit_game(data);
 }
 
+void ft_change_x(t_data * data, int key, int one, int two)
+{
+
+	data->keycode = key;
+	data->pos_player.x += one;
+	if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1' 
+	|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
+		data->pos_player.x += two;
+	else
+	{
+		pmoves(data);
+		printf ("Current move : %d\n", data->movement);
+		data->movement++;
+	}
+
+}
+
+void ft_chnage_y(t_data * data, int key, int one, int two)
+{
+	data->keycode = key;
+	data->pos_player.y += one;
+	if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
+	|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
+		data->pos_player.y += two;
+	else
+	{
+		pmoves(data);
+		printf ("Current move : %d\n", data->movement);
+		data->movement++;
+	}
+}
+
+
 int	deal_key(int key, void *param)
 {
 	t_data *data = (t_data *)param;
 	if (key == LEFT || key == A)
-	{	
-		data->keycode = key;
-		data->pos_player.x += -1;
-		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1' 
-		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
-			data->pos_player.x += 1;
-		else
-		{
-			pmoves(data);
-			printf ("Current move : %d\n", data->movement);
-			data->movement++;
-		}
-	}
+		ft_change_x(data, key, -1, 1);
 	if (key == RIGHT || key == D)
-	{	
-		data->keycode = key;
-		data->pos_player.x += 1;
-		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
-		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
-			data->pos_player.x += -1;
-		else
-		{
-			pmoves(data);
-			printf ("Current move : %d\n", data->movement);
-			data->movement++;
-		}
-	}	
+		ft_change_x(data, key, 1, -1);	
 	else if (key == UP || key == W)
-	{	
-		data->keycode = key;
-		data->pos_player.y += -1;
-		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
-		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
-			data->pos_player.y += 1;
-		else
-		{
-			pmoves(data);
-			printf ("Current move : %d\n", data->movement);
-			data->movement++;
-		}
-	}	
+		ft_chnage_y(data, key, -1, 1);
 	else if (key == DOWN || key == S)
-	{
-		data->keycode = key;
-		data->pos_player.y += 1;
-		if (data->map_tab[data->pos_player.y][data->pos_player.x] == '1'
-		|| (data->map_tab[data->pos_player.y][data->pos_player.x] == 'E' && data->collectible > 0))
-			data->pos_player.y += -1;
-		else
-		{
-			pmoves(data);
-			printf ("Current move : %d\n", data->movement);
-			data->movement++;
-		}
-	}		
+		ft_chnage_y(data, key, 1, -1);
 	else if (key == ESC)
 		quit_game(data);
-
-	if (data->width - 1 < 0)
-		data->pos_player.x = 0;
-	if (data->pos_player.x > data->width - 1)
-		data->pos_player.x = data->width - 1;
-	if (data->pos_player.x < 0)
-		data->pos_player.x = 0;
-	if (data->height - 1 < 0)
-		data->pos_player.y = 0;
-	if (data->pos_player.y > data->height - 1)
-		data->pos_player.y = data->height - 1;
-	if (data->pos_player.y < 0)
-		data->pos_player.y = 0;
+	check_pposition(data);
 	return (0);
 }
 

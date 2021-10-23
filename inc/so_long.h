@@ -105,5 +105,7 @@ int 	game_frame(void *param);
 void    ft_file_error(int fd, char *file);
 int 	ft_check_extention(char *file);
 void 	data_init(t_data *data, int width, int height);
+void ft_chnage_y(t_data * data, int key, int one, int two);
+void ft_chnage_x(t_data * data, int key, int one, int two);
 
 #endif
