@@ -15,12 +15,12 @@
 # define L_PLAYER "left.xpm"
 # define R_PLAYER "right.xpm"
 # define COLLECTIBLE "diamond.xpm"
-# define EXIT "exit.xpm"
+# define EXIT "zamok.xpm"
 # define WALL "tree.xpm"
 # define BACKGROUND "ground.xpm" 
 
-# define WINDOW_SIZE_X 16
-# define WINDOW_SIZE_Y 16
+# define WINDOW_SIZE_X 20
+# define WINDOW_SIZE_Y 24
 
 # define UP 65362
 # define DOWN 65364
