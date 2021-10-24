@@ -1,37 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_coordinates.c                                 :+:      :+:    :+:   */
+/*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 17:33:14 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/09/29 17:33:19 by ddiakova         ###   ########.fr       */
+/*   Updated: 2021/10/24 17:23:05 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	get_coordinates(t_data *data)
+void	ft_free_line(char *line)
 {
-	int x;
-	int y;
-
-	y = 0;
-	while (data->map_tab[y])
+	if (line)
 	{
-		x = 0;
-		while(data->map_tab[y][x])
-		{
-			if (data->map_tab[y][x] == 'P')
-			{
-				data->pos_player.x = x;
-				data->pos_player.y = y;
-			}
-			x++;
-		}
-		y++;
+		free(line);
+		line = NULL;
 	}
+}
+
+void	ft_freetab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	ft_free_data_and_exit(t_data *data)
+{
+	ft_freetab(data->map_tab);
+	free(data);
+	exit (0);
 }
 
 void	lstdelone(t_list **list)
@@ -58,18 +65,3 @@ void	ft_listclear(t_list **list)
 	}
 	*list = NULL;
 }
-
-void	ft_freetab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
-

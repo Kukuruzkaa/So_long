@@ -6,14 +6,14 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 09:06:59 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/03/09 10:55:37 by ddiakova         ###   ########.fr       */
+/*   Updated: 2021/10/24 17:01:47 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "libft.h"
 
-int		ft_strchr_g(char *s, int c)
+int	ft_strchr_g(char *s, int c)
 {
 	int	i;
 
@@ -37,7 +37,8 @@ char	*ft_joinstr(char *s1, char *s2, size_t size)
 	char	*s3;
 
 	str1len = ft_strlen(s1);
-	if (!(s3 = (char*)malloc(sizeof(char) * (str1len + size + 1))))
+	s3 = (char *)malloc(sizeof(char) * (str1len + size + 1));
+	if (!s3)
 		return (NULL);
 	i = 0;
 	while (i < str1len)
@@ -62,7 +63,7 @@ void	*ft_getmemset(void *b, int c, size_t len)
 	size_t	index;
 	char	*str;
 
-	str = (char*)b;
+	str = (char *)b;
 	index = 0;
 	while (index < len)
 	{

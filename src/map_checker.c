@@ -6,36 +6,36 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 15:32:04 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/09/06 15:32:07 by ddiakova         ###   ########.fr       */
+/*   Updated: 2021/10/24 17:27:59 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int 	ft_is_rectangular(t_data *data)
+int	ft_is_rectangular(t_data *data)
 {
-	if  (data->height == data->width)
+	if (data->height == data->width)
 		return (0);
 	return (1);
 }
 
 int	ft_is_same_length(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data->map_tab[i] && data->map_tab[i + 1] != NULL)
 	{
-		if (ft_strlen(data->map_tab[i + 1]) != ft_strlen(data->map_tab[i])) 
+		if (ft_strlen(data->map_tab[i + 1]) != ft_strlen(data->map_tab[i]))
 			return (0);
 		i++;
 	}
 	return (1);
-} 
+}
 
-int ft_is_ones_only(char *line)
+int	ft_is_ones_only(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
@@ -47,14 +47,13 @@ int ft_is_ones_only(char *line)
 	return (1);
 }
 
-int ft_is_one_ended(char *line)
+int	ft_is_one_ended(char *line)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = ft_strlen(line) - 1;
-
 	while (line[i])
 	{
 		if (i == 0 || i == j)
@@ -67,9 +66,9 @@ int ft_is_one_ended(char *line)
 	return (1);
 }
 
-int 	ft_is_possible_character(char *line)
+int	ft_is_possible_character(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
