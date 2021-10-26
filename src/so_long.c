@@ -36,24 +36,80 @@ void	get_coordinates(t_data *data)
 
 void	load_textures(t_data *data)
 {
+	int count;
+
+	count = 0;
 	file_to_image(data, &(data->tex_dplayer), D_PLAYER);
+	if (data->flag == 1)
+		count++;
 	file_to_image(data, &(data->tex_uplayer), U_PLAYER);
+	if (data->flag == 1)
+		count++;
 	file_to_image(data, &(data->tex_lplayer), L_PLAYER);
+	if (data->flag == 1)
+		count++;
 	file_to_image(data, &(data->tex_rplayer), R_PLAYER);
+	if (data->flag == 1)
+		count++;
 	file_to_image(data, &(data->tex_collectible), COLLECTIBLE);
+	if (data->flag == 1)
+		count++;
 	file_to_image(data, &(data->tex_wall), WALL);
+	if (data->flag == 1)
+		count++;
 	file_to_image(data, &(data->tex_background), BACKGROUND);
+	if (data->flag == 1)
+		count++;
 	file_to_image(data, &(data->tex_exit), EXIT);
+	if (data->flag == 1)
+		count++;
+	if (count > 0)
+	{
+		ft_putstr_fd("Error : Texture not found\n", 2);
+		ft_freetab(data->map_tab);
+		if (data->tex_dplayer.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_dplayer.img);
+		if (data->tex_uplayer.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_uplayer.img);
+		if (data->tex_lplayer.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_lplayer.img);
+		if (data->tex_rplayer.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_rplayer.img);
+		if (data->tex_collectible.img)
+			mlx_destroy_image(data->mlx_ptr, data->tex_collectible.img);
+		if (data->tex_exit.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_exit.img);
+		if (data->tex_wall.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
+		if (data->tex_background.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+		free(data);
+		exit (0);
+	}
 }
 
 void	data_init(t_data *data, int width, int height)
 {
+	data->mlx_ptr = NULL;
+	data->win_ptr = NULL;
 	data->mlx_ptr = mlx_init();
+	if (data->mlx_ptr == NULL)
+	{	
+		free(data->mlx_ptr);
+		exit (0);
+	}
 	load_textures(data);
 	data->w_width = width * data->tex_dplayer.t_width;
 	data->w_height = height * data->tex_dplayer.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width,
 			data->w_height, NAME);
+	if (data->win_ptr == NULL)
+	{
+		free(data->mlx_ptr);
+		exit (0);
+	}
 	get_coordinates(data);
 	data->movement = 1;
 	data->keycode = 0;
@@ -87,6 +143,8 @@ int	quit_game(void *param)
 {
 	t_data	*data;
 
+	if (!param)
+		exit(0);
 	data = (t_data *)param;
 	ft_freetab(data->map_tab);
 	if (data->index == 0)
@@ -101,7 +159,7 @@ int	quit_game(void *param)
 	mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	// mlx_destroy_display(data->mlx_ptr);
+	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
 	free(data);
 	exit (0);

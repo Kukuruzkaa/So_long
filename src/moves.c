@@ -75,7 +75,7 @@ void	ft_chnage_y(t_data *data, int key, int one, int two)
 	else
 	{
 		pmoves(data);
-		printf ("Current move : %d\n", data->movement);
+		printf ("Current number of movements : %d\n", data->movement);
 		data->movement++;
 	}
 }

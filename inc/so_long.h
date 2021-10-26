@@ -13,7 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "../minilibx-macos/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
@@ -34,24 +34,24 @@
 # define WINDOW_SIZE_X 20
 # define WINDOW_SIZE_Y 24
 
-// # define UP 65362
-// # define DOWN 65364
-// # define LEFT 65361
-// # define RIGHT 65363
-// # define W 119
-// # define S 115
-// # define A 97
-// # define D 100
-// # define ESC 65307
-# define UP 126
-# define DOWN 125
-# define LEFT 123
-# define RIGHT 124
-# define W 13
-# define S 1
-# define A 0
-# define D 2
-# define ESC 53
+# define UP 65362
+# define DOWN 65364
+# define LEFT 65361
+# define RIGHT 65363
+# define W 119
+# define S 115
+# define A 97
+# define D 100
+# define ESC 65307
+// # define UP 126
+// # define DOWN 125
+// # define LEFT 123
+// # define RIGHT 124
+// # define W 13
+// # define S 1
+// # define A 0
+// # define D 2
+// # define ESC 53
 
 typedef struct s_texture {
 	void	*img;
@@ -82,6 +82,7 @@ typedef struct s_data {
 	int				movement;
 	int				collectible;
 	int				keycode;
+	int				flag;
 	t_texture		tex_dplayer;
 	t_texture		tex_uplayer;
 	t_texture		tex_lplayer;
@@ -122,6 +123,7 @@ void	ft_file_error(int fd, char *file);
 
 //draw_functions
 void	my_mlx_sprite_put(t_data *data, t_texture *texture, int x, int y);
+void	load_textures(t_data *data);
 void	ft_draw_background(t_data *data);
 void	ft_draw_sprites(t_data *data);
 void	ft_draw_player(t_data *data, t_texture *texture);

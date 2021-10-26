@@ -16,19 +16,21 @@ void	file_to_image(t_data *data, t_texture *texture, char *img)
 {
 	int	fd;
 
+	data->flag = 0;
 	fd = open(img, O_RDONLY, 0);
-	if (fd < 0)
-		ft_error_output(data, 7);
-	else 
+	if (fd > 0)
 	{
 		texture->img = mlx_xpm_file_to_image(data->mlx_ptr, img,
 				&(texture->t_width), &(texture->t_height));
-	}
-	if (!texture->img)
-		return ;
-	texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel),
+		texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel),
 			&(texture->line_length), &(texture->endian));
-	close (fd);
+		close (fd);	
+	}
+	else
+	{
+		data->flag = 1;
+		texture->img = NULL;
+	}
 }
 
 void	my_mlx_sprite_put(t_data *data, t_texture *texture, int x, int y)

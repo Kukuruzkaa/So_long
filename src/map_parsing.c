@@ -83,8 +83,13 @@ void	ft_read_map(char *file, t_data *data)
 	ft_file_error(fd, file);
 	ret = get_next_line(fd, &line);
 	while (ret == 1)
-	{
-		if (line != NULL && ft_strlen(line) > 0)
+	{	
+		if (line[0] == 0)
+		{
+			free(line);
+			line = NULL;
+		}
+		if (line != NULL && ft_strlen(line) > 0 && line[0] != 0)
 			ft_add_lst(&map, line);
 		ret = get_next_line(fd, &line);
 	}
