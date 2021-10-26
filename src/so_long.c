@@ -83,17 +83,18 @@ void	load_textures(t_data *data)
 			mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
 		if (data->tex_background.img != NULL)
 			mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
+		if (data->mlx_ptr) {
+			mlx_destroy_display(data->mlx_ptr);
+			free(data->mlx_ptr);
+		}
 		free(data);
 		exit (0);
 	}
 }
 
-void	data_init(t_data *data, int width, int height)
+void	mlx_data_init(t_data *data, int width, int height)
 {
-	data->mlx_ptr = NULL;
-	data->win_ptr = NULL;
+	// ft_data_init(data);
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
 	{	
@@ -147,7 +148,8 @@ int	quit_game(void *param)
 		exit(0);
 	data = (t_data *)param;
 	ft_freetab(data->map_tab);
-	if (data->index == 0)
+	//if (data->index == 0)
+	if (data->image)
 		mlx_destroy_image(data->mlx_ptr, data->image);
 	mlx_destroy_image(data->mlx_ptr, data->tex_dplayer.img);
 	mlx_destroy_image(data->mlx_ptr, data->tex_uplayer.img);
@@ -164,3 +166,14 @@ int	quit_game(void *param)
 	free(data);
 	exit (0);
 }
+
+// void free_global() {
+// 	if (pointer1)
+// 		free(pointer2);
+// 	..
+// }
+
+// int free_and_exit(int code) {
+// 	free_global();
+// 	exit(code);
+// }

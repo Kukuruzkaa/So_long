@@ -28,7 +28,7 @@
 # define R_PLAYER "./textures/right.xpm"
 # define COLLECTIBLE "./textures/diamond.xpm"
 # define EXIT "./textures/zamok.xpm"
-# define WALL "./textures/tree.xpm"
+# define WALL "./texturestree.xpm"
 # define BACKGROUND "./textures/ground.xpm" 
 
 # define WINDOW_SIZE_X 20
@@ -99,6 +99,7 @@ typedef struct s_data {
 }							t_data;
 
 //parsing_utils
+void	ft_data_init(t_data *data);
 int		ft_get_height(t_data *data);
 int		ft_get_width(t_data *data);
 int		ft_strcmp(char *s1, char *s2);
@@ -134,7 +135,7 @@ int		deal_key(int key, void *param);
 
 //game_functions
 void	get_coordinates(t_data *data);
-void	data_init(t_data *data, int width, int height);
+void	mlx_data_init(t_data *data, int width, int height);
 int		game_frame(void *param);
 int		quit_game(void *param);
 
