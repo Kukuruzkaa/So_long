@@ -28,8 +28,8 @@
 # define R_PLAYER "./textures/right.xpm"
 # define COLLECTIBLE "./textures/diamond.xpm"
 # define EXIT "./textures/zamok.xpm"
-# define WALL "./texturestree.xpm"
-# define BACKGROUND "./textures/ground.xpm" 
+# define WALL "./textures/tree.xpm"
+# define BACKGROUND "./texturesground.xpm" 
 
 # define WINDOW_SIZE_X 20
 # define WINDOW_SIZE_Y 24
@@ -121,10 +121,11 @@ void	ft_add_lst(t_list **lst, char *line);
 //errors
 void	ft_error_output(t_data *data, int err);
 void	ft_file_error(int fd, char *file);
+void	ft_error_quit(t_data *data, int count);
 
 //draw_functions
 void	my_mlx_sprite_put(t_data *data, t_texture *texture, int x, int y);
-void	load_textures(t_data *data);
+void	load_textures(t_data *data, int count);
 void	ft_draw_background(t_data *data);
 void	ft_draw_sprites(t_data *data);
 void	ft_draw_player(t_data *data, t_texture *texture);
@@ -137,6 +138,7 @@ int		deal_key(int key, void *param);
 void	get_coordinates(t_data *data);
 void	mlx_data_init(t_data *data, int width, int height);
 int		game_frame(void *param);
+void	ft_destroy_images(t_data *data)
 int		quit_game(void *param);
 
 //moves_functions

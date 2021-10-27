@@ -39,3 +39,12 @@ void	ft_error_output(t_data *data, int err)
 		ft_putstr_fd("Error : Texture doesn't exist\n", 2);
 	ft_free_data_and_exit(data);
 }
+
+void	ft_error_quit(t_data *data, int count)
+{
+	if (count > 0)
+	{
+		ft_putstr_fd("Error : Texture not found\n", 2);
+		quit_game(data);
+	}
+}

@@ -12,6 +12,22 @@
 
 #include "so_long.h"
 
+void	ft_data_init(t_data *data)
+{
+	data->mlx_ptr = NULL;
+	data->win_ptr = NULL;
+	data->image = NULL;
+	data->addr = NULL;
+	data->tex_dplayer.img = NULL;
+	data->tex_uplayer.img = NULL;
+	data->tex_lplayer.img = NULL;
+	data->tex_rplayer.img = NULL;
+	data->tex_wall.img = NULL;
+	data->tex_background.img = NULL;
+	data->tex_exit.img = NULL;
+	data->tex_collectible.img = NULL;
+}
+
 void	ft_map_check(t_data *data, char *str)
 {
 	int	fd;
@@ -22,23 +38,6 @@ void	ft_map_check(t_data *data, char *str)
 	data->width = ft_get_width(data);
 	ft_full_map_error_check(data);
 	close(fd);
-}
-
-void	ft_data_init(t_data *data)
-{
-	data->mlx_ptr = NULL;
-	data->win_ptr = NULL;
-	data->image = NULL;
-	data->addr = NULL;
-	// data->map_tab = NULL;
-	data->tex_dplayer.img = NULL;
-	data->tex_uplayer.img = NULL;
-	data->tex_lplayer.img = NULL;
-	data->tex_rplayer.img = NULL;
-	data->tex_wall.img = NULL;
-	data->tex_background.img = NULL;
-	data->tex_exit.img = NULL;
-	data->tex_collectible.img = NULL;
 }
 
 int	main(int argc, char **argv)

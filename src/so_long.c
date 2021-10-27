@@ -34,11 +34,8 @@ void	get_coordinates(t_data *data)
 	}
 }
 
-void	load_textures(t_data *data)
+void	load_textures(t_data *data, int count)
 {
-	int count;
-
-	count = 0;
 	file_to_image(data, &(data->tex_dplayer), D_PLAYER);
 	if (data->flag == 1)
 		count++;
@@ -63,45 +60,18 @@ void	load_textures(t_data *data)
 	file_to_image(data, &(data->tex_exit), EXIT);
 	if (data->flag == 1)
 		count++;
-	if (count > 0)
-	{
-		ft_putstr_fd("Error : Texture not found\n", 2);
-		ft_freetab(data->map_tab);
-		if (data->tex_dplayer.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_dplayer.img);
-		if (data->tex_uplayer.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_uplayer.img);
-		if (data->tex_lplayer.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_lplayer.img);
-		if (data->tex_rplayer.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_rplayer.img);
-		if (data->tex_collectible.img)
-			mlx_destroy_image(data->mlx_ptr, data->tex_collectible.img);
-		if (data->tex_exit.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_exit.img);
-		if (data->tex_wall.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
-		if (data->tex_background.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
-		if (data->mlx_ptr) {
-			mlx_destroy_display(data->mlx_ptr);
-			free(data->mlx_ptr);
-		}
-		free(data);
-		exit (0);
-	}
+	ft_error_quit(data, count);	
 }
 
 void	mlx_data_init(t_data *data, int width, int height)
 {
-	// ft_data_init(data);
 	data->mlx_ptr = mlx_init();
 	if (data->mlx_ptr == NULL)
 	{	
 		free(data->mlx_ptr);
 		exit (0);
 	}
-	load_textures(data);
+	load_textures(data, 0);
 	data->w_width = width * data->tex_dplayer.t_width;
 	data->w_height = height * data->tex_dplayer.t_height;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width,
@@ -136,8 +106,27 @@ int	game_frame(void *param)
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
 	mlx_destroy_image(data->mlx_ptr, data->image);
 	data->image = NULL;
-	data->index = 1;
 	return (0);
+}
+
+void ft_destroy_images(t_data *data)
+{
+	if (data->tex_dplayer.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_dplayer.img);
+	if (data->tex_uplayer.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_uplayer.img);
+	if (data->tex_lplayer.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_lplayer.img);
+	if (data->tex_rplayer.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_rplayer.img);
+	if (data->tex_collectible.img)
+			mlx_destroy_image(data->mlx_ptr, data->tex_collectible.img);
+	if (data->tex_exit.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_exit.img);
+	if (data->tex_wall.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
+	if (data->tex_background.img != NULL)
+			mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
 }
 
 int	quit_game(void *param)
@@ -148,32 +137,19 @@ int	quit_game(void *param)
 		exit(0);
 	data = (t_data *)param;
 	ft_freetab(data->map_tab);
-	//if (data->index == 0)
 	if (data->image)
 		mlx_destroy_image(data->mlx_ptr, data->image);
-	mlx_destroy_image(data->mlx_ptr, data->tex_dplayer.img);
-	mlx_destroy_image(data->mlx_ptr, data->tex_uplayer.img);
-	mlx_destroy_image(data->mlx_ptr, data->tex_lplayer.img);
-	mlx_destroy_image(data->mlx_ptr, data->tex_rplayer.img);
-	mlx_destroy_image(data->mlx_ptr, data->tex_collectible.img);
-	mlx_destroy_image(data->mlx_ptr, data->tex_exit.img);
-	mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
-	mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
+	ft_destroy_images(data);
+	if (data->win_ptr != NULL)
+	{
+			mlx_clear_window(data->mlx_ptr, data->win_ptr);
+			mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	}
+	if (data->mlx_ptr) 
+	{
+			mlx_destroy_display(data->mlx_ptr);
+			free(data->mlx_ptr);
+	}
 	free(data);
 	exit (0);
 }
-
-// void free_global() {
-// 	if (pointer1)
-// 		free(pointer2);
-// 	..
-// }
-
-// int free_and_exit(int code) {
-// 	free_global();
-// 	exit(code);
-// }
