@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 14:57:41 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/10/24 20:58:30 by ddiakova         ###   ########.fr       */
+/*   Updated: 2021/10/28 17:28:49 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,7 @@ void	ft_read_map(char *file, t_data *data)
 	ret = get_next_line(fd, &line);
 	while (ret == 1)
 	{	
-		if (line[0] == 0)
-		{
-			free(line);
-			line = NULL;
-		}
+		ft_check_zero_line(line);
 		if (line != NULL && ft_strlen(line) > 0 && line[0] != 0)
 			ft_add_lst(&map, line);
 		ret = get_next_line(fd, &line);

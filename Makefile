@@ -30,6 +30,7 @@ endif
 SRCS 			= so_long.c \
 				so_long_utils.c \
 				main.c \
+				init.c \
 				map_checker.c \
 				map_parsing.c \
 				free_functions.c \

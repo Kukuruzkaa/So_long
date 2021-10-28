@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 16:31:39 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/10/24 18:25:11 by ddiakova         ###   ########.fr       */
+/*   Updated: 2021/10/28 17:37:12 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define A 97
 # define D 100
 # define ESC 65307
+
 // # define UP 126
 // # define DOWN 125
 // # define LEFT 123
@@ -78,7 +79,6 @@ typedef struct s_data {
 	void			*addr;
 	int				w_width;
 	int				w_height;
-	int				index;
 	int				movement;
 	int				collectible;
 	int				keycode;
@@ -138,7 +138,7 @@ int		deal_key(int key, void *param);
 void	get_coordinates(t_data *data);
 void	mlx_data_init(t_data *data, int width, int height);
 int		game_frame(void *param);
-void	ft_destroy_images(t_data *data)
+void	ft_destroy_images(t_data *data);
 int		quit_game(void *param);
 
 //moves_functions

@@ -6,39 +6,11 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 15:07:25 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/10/24 17:25:10 by ddiakova         ###   ########.fr       */
+/*   Updated: 2021/10/28 17:28:32 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	ft_data_init(t_data *data)
-{
-	data->mlx_ptr = NULL;
-	data->win_ptr = NULL;
-	data->image = NULL;
-	data->addr = NULL;
-	data->tex_dplayer.img = NULL;
-	data->tex_uplayer.img = NULL;
-	data->tex_lplayer.img = NULL;
-	data->tex_rplayer.img = NULL;
-	data->tex_wall.img = NULL;
-	data->tex_background.img = NULL;
-	data->tex_exit.img = NULL;
-	data->tex_collectible.img = NULL;
-}
-
-void	ft_map_check(t_data *data, char *str)
-{
-	int	fd;
-
-	ft_read_map(str, data);
-	fd = open(str, O_RDONLY, 0);
-	data->height = ft_get_height(data);
-	data->width = ft_get_width(data);
-	ft_full_map_error_check(data);
-	close(fd);
-}
 
 int	main(int argc, char **argv)
 {

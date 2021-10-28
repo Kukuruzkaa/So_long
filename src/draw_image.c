@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 14:44:56 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/10/24 20:57:41 by ddiakova         ###   ########.fr       */
+/*   Updated: 2021/10/28 17:26:21 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	file_to_image(t_data *data, t_texture *texture, char *img)
 	{
 		texture->img = mlx_xpm_file_to_image(data->mlx_ptr, img,
 				&(texture->t_width), &(texture->t_height));
-		texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel),
-			&(texture->line_length), &(texture->endian));
-		close (fd);	
+		texture->addr = mlx_get_data_addr(texture->img,
+				&(texture->bits_per_pixel),
+				&(texture->line_length), &(texture->endian));
+		close (fd);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: ddiakova <ddiakova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 15:31:18 by ddiakova          #+#    #+#             */
-/*   Updated: 2021/10/24 20:59:52 by ddiakova         ###   ########.fr       */
+/*   Updated: 2021/10/28 17:25:24 by ddiakova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,30 +60,7 @@ void	load_textures(t_data *data, int count)
 	file_to_image(data, &(data->tex_exit), EXIT);
 	if (data->flag == 1)
 		count++;
-	ft_error_quit(data, count);	
-}
-
-void	mlx_data_init(t_data *data, int width, int height)
-{
-	data->mlx_ptr = mlx_init();
-	if (data->mlx_ptr == NULL)
-	{	
-		free(data->mlx_ptr);
-		exit (0);
-	}
-	load_textures(data, 0);
-	data->w_width = width * data->tex_dplayer.t_width;
-	data->w_height = height * data->tex_dplayer.t_height;
-	data->win_ptr = mlx_new_window(data->mlx_ptr, data->w_width,
-			data->w_height, NAME);
-	if (data->win_ptr == NULL)
-	{
-		free(data->mlx_ptr);
-		exit (0);
-	}
-	get_coordinates(data);
-	data->movement = 1;
-	data->keycode = 0;
+	ft_error_quit(data, count);
 }
 
 int	game_frame(void *param)
@@ -109,24 +86,24 @@ int	game_frame(void *param)
 	return (0);
 }
 
-void ft_destroy_images(t_data *data)
+void	ft_destroy_images(t_data *data)
 {
 	if (data->tex_dplayer.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_dplayer.img);
+		mlx_destroy_image(data->mlx_ptr, data->tex_dplayer.img);
 	if (data->tex_uplayer.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_uplayer.img);
+		mlx_destroy_image(data->mlx_ptr, data->tex_uplayer.img);
 	if (data->tex_lplayer.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_lplayer.img);
+		mlx_destroy_image(data->mlx_ptr, data->tex_lplayer.img);
 	if (data->tex_rplayer.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_rplayer.img);
+		mlx_destroy_image(data->mlx_ptr, data->tex_rplayer.img);
 	if (data->tex_collectible.img)
-			mlx_destroy_image(data->mlx_ptr, data->tex_collectible.img);
+		mlx_destroy_image(data->mlx_ptr, data->tex_collectible.img);
 	if (data->tex_exit.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_exit.img);
+		mlx_destroy_image(data->mlx_ptr, data->tex_exit.img);
 	if (data->tex_wall.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
+		mlx_destroy_image(data->mlx_ptr, data->tex_wall.img);
 	if (data->tex_background.img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
+		mlx_destroy_image(data->mlx_ptr, data->tex_background.img);
 }
 
 int	quit_game(void *param)
@@ -142,13 +119,13 @@ int	quit_game(void *param)
 	ft_destroy_images(data);
 	if (data->win_ptr != NULL)
 	{
-			mlx_clear_window(data->mlx_ptr, data->win_ptr);
-			mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_clear_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	}
-	if (data->mlx_ptr) 
+	if (data->mlx_ptr)
 	{
-			mlx_destroy_display(data->mlx_ptr);
-			free(data->mlx_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
 	}
 	free(data);
 	exit (0);
